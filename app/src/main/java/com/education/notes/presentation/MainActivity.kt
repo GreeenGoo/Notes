@@ -1,9 +1,10 @@
-package com.education.notes
+package com.education.notes.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.education.notes.R
 import com.education.notes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
