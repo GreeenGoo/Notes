@@ -1,4 +1,4 @@
-package com.education.notes.presentation.fragments.notes
+package com.education.notes.presentation.fragments.notes.Add
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,11 +11,8 @@ import com.education.notes.R
 import com.education.notes.databinding.FragmentNotesBinding
 import com.education.notes.presentation.RecyclerAdapter
 
-class NotesFragment : Fragment() {
+class AddFragment : Fragment() {
     private lateinit var binding: FragmentNotesBinding
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>? = null
-    private lateinit var recyclerView : RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,16 +20,5 @@ class NotesFragment : Fragment() {
     ): View {
         binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        layoutManager = LinearLayoutManager(requireContext())
-
-        recyclerView = binding.recyclerView
-        recyclerView.layoutManager = layoutManager
-
-        adapter = RecyclerAdapter()
-        recyclerView.adapter = adapter
     }
 }

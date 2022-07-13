@@ -7,12 +7,20 @@
 
     <fragment
         android:id="@+id/nav_graph_notes_fragment"
-        android:name="com.education.notes.presentation.fragments.notes.NotesFragment"
+        android:name="com.education.notes.presentation.fragments.notes.Add.AddFragment"
         android:label="fragment_notes"
-        tools:layout="@layout/fragment_notes" />
+        tools:layout="@layout/fragment_add" >
+        <action
+            android:id="@+id/action_nav_graph_notes_fragment_to_nav_graph_tasks_fragment"
+            app:destination="@id/nav_graph_tasks_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_graph_tasks_fragment"
         android:name="com.education.notes.presentation.fragments.tasks.TasksFragment"
         android:label="fragment_tasks"
-        tools:layout="@layout/fragment_tasks" />
+        tools:layout="@layout/fragment_tasks" >
+        <action
+            android:id="@+id/action_nav_graph_tasks_fragment_to_nav_graph_notes_fragment"
+            app:destination="@id/nav_graph_notes_fragment" />
+    </fragment>
 </navigation>
