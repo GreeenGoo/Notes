@@ -3,6 +3,7 @@ package com.education.notes.presentation
 //import androidx.navigation.findNavController
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.education.notes.R
@@ -22,5 +23,10 @@ class MainActivity : AppCompatActivity() {
                     it
                 )
             }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.fragmentContainerView)
+        return super.onSupportNavigateUp() || navController.navigateUp()
     }
 }
