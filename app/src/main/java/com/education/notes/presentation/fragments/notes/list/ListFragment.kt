@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
 import com.education.notes.databinding.FragmentListBinding
-import com.education.notes.presentation.data.UserViewModel
+import com.education.notes.presentation.viewmodel.UserViewModel
 
 class ListFragment : Fragment() {
 

@@ -1,9 +1,12 @@
-package com.education.notes.presentation.data
+package com.education.notes.presentation.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.education.notes.presentation.data.UserDatabase
+import com.education.notes.presentation.repository.UserRepository
+import com.education.notes.presentation.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

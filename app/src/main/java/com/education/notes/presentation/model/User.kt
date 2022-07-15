@@ -1,4 +1,4 @@
-package com.education.notes.presentation.data
+package com.education.notes.presentation.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

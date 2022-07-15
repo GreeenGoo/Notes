@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.education.notes.R
 import com.education.notes.databinding.FragmentAddBinding
-import com.education.notes.presentation.data.User
-import com.education.notes.presentation.data.UserViewModel
+import com.education.notes.presentation.model.User
+import com.education.notes.presentation.viewmodel.UserViewModel
 
 class AddFragment : Fragment() {
     private lateinit var mUserViewModel: UserViewModel
