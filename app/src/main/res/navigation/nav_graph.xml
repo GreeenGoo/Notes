@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_nav_graph_list_fragment_to_nav_graph_add_fragment"
             app:destination="@id/nav_graph_add_fragment" />
+        <action
+            android:id="@+id/action_nav_graph_list_fragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_graph_add_fragment"
@@ -21,5 +24,16 @@
         <action
             android:id="@+id/action_nav_graph_add_fragment_to_nav_graph_list_fragment"
             app:destination="@id/nav_graph_list_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/update_fragment"
+        android:name="com.education.notes.presentation.fragments.notes.update.UpdateFragment"
+        android:label="Update" >
+        <action
+            android:id="@+id/action_updateFragment_to_nav_graph_list_fragment"
+            app:destination="@id/nav_graph_list_fragment" />
+        <argument
+            android:name="currentUser"
+            app:argType="com.education.notes.presentation.model.User" />
     </fragment>
 </navigation>
