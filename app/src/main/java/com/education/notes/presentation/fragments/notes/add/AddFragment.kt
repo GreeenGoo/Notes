@@ -1,4 +1,4 @@
-package com.education.notes.presentation.fragments.notes.Add
+package com.education.notes.presentation.fragments.notes.add
 
 import android.os.Bundle
 import android.text.Editable

@@ -6,7 +6,7 @@
     app:startDestination="@id/nav_graph_list_fragment">
     <fragment
         android:id="@+id/nav_graph_list_fragment"
-        android:name="com.education.notes.presentation.fragments.notes.List.ListFragment"
+        android:name="com.education.notes.presentation.fragments.notes.list.ListFragment"
         android:label="Notes"
         tools:layout="@layout/fragment_list">
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_graph_add_fragment"
-        android:name="com.education.notes.presentation.fragments.notes.Add.AddFragment"
+        android:name="com.education.notes.presentation.fragments.notes.add.AddFragment"
         android:label="Add"
         tools:layout="@layout/fragment_add">
         <action

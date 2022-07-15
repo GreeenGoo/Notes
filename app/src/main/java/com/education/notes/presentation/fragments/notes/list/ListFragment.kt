@@ -1,4 +1,4 @@
-package com.education.notes.presentation.fragments.notes.List
+package com.education.notes.presentation.fragments.notes.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,7 +25,6 @@ class ListFragment : Fragment() {
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.nav_graph_add_fragment)
         }
-
         return binding.root
     }
 }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".presentation.fragments.notes.Add.AddFragment">
+    tools:context=".presentation.fragments.notes.add.AddFragment">
 
     <EditText
         android:id="@+id/add_fragment_first_name"
