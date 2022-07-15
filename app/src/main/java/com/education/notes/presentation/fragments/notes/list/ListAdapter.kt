@@ -3,6 +3,7 @@ package com.education.notes.presentation.fragments.notes.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.education.notes.R
 import com.education.notes.presentation.model.User
@@ -30,6 +31,11 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         holder.itemView.row_first_name.text = currentItem.firstName.toString()
         holder.itemView.row_last_name.text = currentItem.lastName.toString()
         holder.itemView.row_age.text = currentItem.age.toString()
+
+        holder.itemView.row_layout.setOnClickListener {
+            val action = ListFragmentDirections.actionNavGraphListFragmentToUpdateFragment(currentItem)
+            holder.itemView.findNavController().navigate(action)
+        }
     }
 
     fun setData(user: List <User>){

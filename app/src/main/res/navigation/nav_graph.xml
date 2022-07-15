@@ -14,7 +14,7 @@
             app:destination="@id/nav_graph_add_fragment" />
         <action
             android:id="@+id/action_nav_graph_list_fragment_to_updateFragment"
-            app:destination="@id/updateFragment" />
+            app:destination="@id/update_fragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_graph_add_fragment"

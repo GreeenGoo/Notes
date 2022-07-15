@@ -9,7 +9,7 @@
     tools:context=".presentation.fragments.notes.add.AddFragment">
 
     <EditText
-        android:id="@+id/upgrade_fragment_first_name"
+        android:id="@+id/add_fragment_first_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/upgrade_fragment_last_name"
+        android:id="@+id/add_fragment_last_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
@@ -30,10 +30,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upgrade_fragment_first_name" />
+        app:layout_constraintTop_toBottomOf="@id/add_fragment_first_name" />
 
     <EditText
-        android:id="@+id/upgrade_fragment_age"
+        android:id="@+id/add_fragment_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
@@ -42,10 +42,10 @@
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upgrade_fragment_last_name" />
+        app:layout_constraintTop_toBottomOf="@id/add_fragment_last_name" />
 
     <Button
-        android:id="@+id/upgrade_fragment_upgrade_button"
+        android:id="@+id/add_fragment_add_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
@@ -53,5 +53,5 @@
         android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upgrade_fragment_age" />
+        app:layout_constraintTop_toBottomOf="@id/add_fragment_age" />
 </androidx.constraintlayout.widget.ConstraintLayout>
