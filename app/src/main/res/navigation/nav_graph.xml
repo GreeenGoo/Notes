@@ -14,7 +14,7 @@
             app:destination="@id/nav_graph_add_fragment" />
         <action
             android:id="@+id/action_nav_graph_list_fragment_to_updateFragment"
-            app:destination="@id/update_fragment" />
+            app:destination="@id/nav_graph_update_fragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_graph_add_fragment"
@@ -26,7 +26,7 @@
             app:destination="@id/nav_graph_list_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/update_fragment"
+        android:id="@+id/nav_graph_update_fragment"
         android:name="com.education.notes.presentation.fragments.notes.update.UpdateFragment"
         android:label="Update" >
         <action
@@ -36,4 +36,9 @@
             android:name="currentUser"
             app:argType="com.education.notes.presentation.model.User" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_graph_task_fragment"
+        android:name="com.education.notes.presentation.fragments.tasks.TasksFragment"
+        android:label="Tasks"
+        tools:layout="@layout/fragment_tasks" />
 </navigation>
