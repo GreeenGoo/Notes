@@ -26,18 +26,19 @@
         <TextView
             android:id="@+id/item_title"
             android:layout_width="236dp"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:textSize="30sp"
+            android:textSize="15sp"
             app:layout_constraintLeft_toRightOf="@id/item_image"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/item_detail"
+            android:id="@+id/item_description"
             android:layout_width="236dp"
-            android:layout_height="16dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:textSize="10sp"
             app:layout_constraintLeft_toRightOf="@+id/item_image"
             app:layout_constraintTop_toBottomOf="@id/item_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>

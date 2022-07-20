@@ -13,14 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
-import com.education.notes.databinding.FragmentListBinding
-import com.education.notes.presentation.viewmodel.UserViewModel
+import com.education.notes.databinding.FragmentNotesListBinding
+import com.education.notes.presentation.viewmodel.NotesViewModel
 
-class ListFragment : Fragment() {
+class NotesListFragment : Fragment() {
 
-    private var _binding: FragmentListBinding? = null
+    private var _binding: FragmentNotesListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mNotesViewModel: NotesViewModel
 
 
     override fun onCreateView(
@@ -28,21 +28,21 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentListBinding.inflate(inflater, container, false)
+        _binding = FragmentNotesListBinding.inflate(inflater, container, false)
 
         //RecyclerView
-        val adapter = ListAdapter()
+        val adapter = NotesListAdapter()
         val recyclerView = _binding!!.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        //UserViewModel
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer{user ->
-            adapter.setData(user)
-        })
+        //NotesViewModel
+        mNotesViewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
+        mNotesViewModel.readAllData.observe(viewLifecycleOwner) { note ->
+            adapter.setData(note)
+        }
 
-        binding.floatingActionButton.setOnClickListener {
+        binding.notesListFragmentFloatingAddButton.setOnClickListener {
             findNavController().navigate(R.id.nav_graph_add_fragment)
         }
         return binding.root
@@ -71,7 +71,7 @@ class ListFragment : Fragment() {
     private fun deleteAllUsers() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
-            mUserViewModel.deleteAllUsers()
+            mNotesViewModel.deleteAllNotes()
             Toast.makeText(
                 requireContext(),
                 "Successfully removed everything!",

@@ -6,9 +6,9 @@
     app:startDestination="@id/nav_graph_list_fragment">
     <fragment
         android:id="@+id/nav_graph_list_fragment"
-        android:name="com.education.notes.presentation.fragments.notes.list.ListFragment"
+        android:name="com.education.notes.presentation.fragments.notes.list.NotesListFragment"
         android:label="Notes"
-        tools:layout="@layout/fragment_list">
+        tools:layout="@layout/fragment_notes_list">
         <action
             android:id="@+id/action_nav_graph_list_fragment_to_nav_graph_add_fragment"
             app:destination="@id/nav_graph_add_fragment" />
@@ -18,23 +18,23 @@
     </fragment>
     <fragment
         android:id="@+id/nav_graph_add_fragment"
-        android:name="com.education.notes.presentation.fragments.notes.add.AddFragment"
+        android:name="com.education.notes.presentation.fragments.notes.add.AddNotesFragment"
         android:label="Add"
-        tools:layout="@layout/fragment_add">
+        tools:layout="@layout/fragment_add_notes">
         <action
             android:id="@+id/action_nav_graph_add_fragment_to_nav_graph_list_fragment"
             app:destination="@id/nav_graph_list_fragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_graph_update_fragment"
-        android:name="com.education.notes.presentation.fragments.notes.update.UpdateFragment"
+        android:name="com.education.notes.presentation.fragments.notes.update.UpdateNotesFragment"
         android:label="Update" >
         <action
             android:id="@+id/action_updateFragment_to_nav_graph_list_fragment"
             app:destination="@id/nav_graph_list_fragment" />
         <argument
-            android:name="currentUser"
-            app:argType="com.education.notes.presentation.model.User" />
+            android:name="currentNote"
+            app:argType="com.education.notes.presentation.model.Notes" />
     </fragment>
     <fragment
         android:id="@+id/nav_graph_task_fragment"
