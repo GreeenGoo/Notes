@@ -32,6 +32,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_title" />
 
+    <ImageView
+        android:id="@+id/add_notes_fragment_image_view"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/add_notes_fragment_start_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_notes_fragment_description" />
+
+    <Button
+        android:id="@+id/add_notes_fragment_upload_picture_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_description"
+        app:layout_constraintLeft_toRightOf="@id/add_notes_fragment_image_view"
+        app:layout_constraintRight_toRightOf="@id/add_notes_fragment_description"/>
+
     <Button
         android:id="@+id/add_notes_fragment_add_button"
         android:layout_width="match_parent"
@@ -41,5 +61,6 @@
         android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_description" />
+        app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_image_view" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

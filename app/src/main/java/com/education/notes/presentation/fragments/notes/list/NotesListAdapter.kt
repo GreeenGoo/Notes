@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.education.notes.R
 import com.education.notes.presentation.model.Notes
 import kotlinx.android.synthetic.main.card_view_layout.view.*
@@ -29,7 +30,8 @@ class NotesListAdapter : RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
         val currentItem = notesList[position]
         holder.itemView.item_title.text = currentItem.title
         holder.itemView.item_description.text = currentItem.description
-        holder.itemView.item_image.setImageResource(R.drawable.just_for_example_icon)
+        Glide.with(holder.itemView.context).load(R.drawable.just_for_example_icon)
+            .into(holder.itemView.item_image)
 
         /*holder.itemView.row_id.text = currentItem.id.toString()
         holder.itemView.row_first_name.text = currentItem.firstName.toString()
@@ -37,7 +39,8 @@ class NotesListAdapter : RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
         holder.itemView.row_age.text = currentItem.age.toString()*/
 
         holder.itemView.card_view.setOnClickListener {
-            val action = NotesListFragmentDirections.actionNavGraphListFragmentToUpdateFragment(currentItem)
+            val action =
+                NotesListFragmentDirections.actionNavGraphListFragmentToUpdateFragment(currentItem)
             holder.itemView.findNavController().navigate(action)
         }
     }

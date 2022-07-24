@@ -1,12 +1,17 @@
 package com.education.notes.presentation.fragments.notes.add
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -30,7 +35,20 @@ class AddNotesFragment : Fragment() {
             insertDataToDataBase()
         }
 
+        binding.addNotesFragmentUploadPictureButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            pickImage.launch(intent)
+        }
+
         return binding.root
+    }
+
+    val pickImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
+        if (result.resultCode == RESULT_OK){
+            val uriImage = result.data?.data
+            binding.addNotesFragmentImageView.setImageURI(uriImage)
+        }
+
     }
 
     private fun insertDataToDataBase() {
