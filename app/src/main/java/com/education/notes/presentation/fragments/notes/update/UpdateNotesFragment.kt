@@ -96,7 +96,7 @@ class UpdateNotesFragment : Fragment() {
             mNotesViewModel.deleteNote(args.currentNote)
             Toast.makeText(
                 requireContext(),
-                "${R.string.note_is_removed}${args.currentNote.title}!",
+                "${getString(R.string.note_is_removed)} ${args.currentNote.title}!",
                 Toast.LENGTH_LONG
             ).show()
             findNavController().navigate(R.id.nav_graph_list_fragment)
@@ -104,8 +104,8 @@ class UpdateNotesFragment : Fragment() {
         builder.setNegativeButton(R.string.no) { _, _ ->
 
         }
-        builder.setTitle("${R.string.delete_note_question_title} ${args.currentNote.title}?")
-        builder.setMessage("${R.string.delete_note_question_message} ${args.currentNote.title}")
+        builder.setTitle("${getString(R.string.delete_note_question_title)} ${args.currentNote.title}?")
+        builder.setMessage("${getString(R.string.delete_note_question_message)} ${args.currentNote.title}")
         builder.create().show()
     }
 
