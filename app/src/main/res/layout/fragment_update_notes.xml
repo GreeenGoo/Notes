@@ -12,9 +12,9 @@
         android:id="@+id/update_notes_fragment_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="30dp"
-        android:hint="Title"
+        android:layout_marginHorizontal="@dimen/update_title_margin_horizontal"
+        android:layout_marginTop="@dimen/update_title_margin_top"
+        android:hint="@string/update_title_hint"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,23 +23,43 @@
     <EditText
         android:id="@+id/update_notes_fragment_description"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:hint="Describe your note..."
+        android:layout_height="@dimen/update_description_height"
+        android:layout_marginHorizontal="@dimen/update_description_margin_horizontal"
+        android:layout_marginTop="@dimen/update_description_margin_top"
+        android:hint="@string/add_description_hint"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/update_notes_fragment_title" />
 
+    <ImageView
+        android:id="@+id/update_notes_fragment_image_view"
+        android:layout_width="@dimen/update_image_view_width"
+        android:layout_height="@dimen/update_image_view_height"
+        android:layout_marginTop="@dimen/update_image_view_margin_top"
+        android:layout_marginStart="@dimen/update_image_view_margin_start"
+        android:background="@color/update_image_view_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_notes_fragment_description" />
+
     <Button
-        android:id="@+id/update_notes_fragment_update_button"
+        android:id="@+id/update_notes_fragment_upload_picture_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_upload_button_text"
+        android:layout_margin="@dimen/update_upload_button_layout_margin"
+        app:layout_constraintTop_toBottomOf="@id/update_notes_fragment_description"
+        app:layout_constraintLeft_toRightOf="@id/update_notes_fragment_image_view"
+        app:layout_constraintRight_toRightOf="@id/update_notes_fragment_description"/>
+
+    <Button
+        android:id="@+id/update_notes_fragment_refresh_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:text="Update"
+        android:layout_marginHorizontal="@dimen/update_refresh_button_margin_horizontal"
+        android:layout_marginTop="@dimen/update_refresh_button_margin_top"
+        android:text="@string/update_refresh_button_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/update_notes_fragment_description" />
+        app:layout_constraintTop_toBottomOf="@id/update_notes_fragment_image_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

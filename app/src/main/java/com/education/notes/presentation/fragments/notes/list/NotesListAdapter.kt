@@ -30,13 +30,8 @@ class NotesListAdapter : RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
         val currentItem = notesList[position]
         holder.itemView.item_title.text = currentItem.title
         holder.itemView.item_description.text = currentItem.description
-        Glide.with(holder.itemView.context).load(R.drawable.just_for_example_icon)
+        Glide.with(holder.itemView.context).load(currentItem.imageURL)
             .into(holder.itemView.item_image)
-
-        /*holder.itemView.row_id.text = currentItem.id.toString()
-        holder.itemView.row_first_name.text = currentItem.firstName.toString()
-        holder.itemView.row_last_name.text = currentItem.lastName.toString()
-        holder.itemView.row_age.text = currentItem.age.toString()*/
 
         holder.itemView.card_view.setOnClickListener {
             val action =

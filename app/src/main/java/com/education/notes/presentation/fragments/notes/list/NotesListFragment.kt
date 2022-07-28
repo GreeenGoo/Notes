@@ -36,7 +36,7 @@ class NotesListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         //NotesViewModel
-        mNotesViewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
+        mNotesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
         mNotesViewModel.readAllData.observe(viewLifecycleOwner) { note ->
             adapter.setData(note)
         }
@@ -69,19 +69,19 @@ class NotesListFragment : Fragment() {
 
     private fun deleteAllUsers() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes") { _, _ ->
+        builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
             mNotesViewModel.deleteAllNotes()
             Toast.makeText(
                 requireContext(),
-                "Successfully removed everything!",
+                getString(R.string.notes_are_removed),
                 Toast.LENGTH_LONG
             ).show()
         }
-        builder.setNegativeButton("No") { _, _ ->
+        builder.setNegativeButton(getString(R.string.no)) { _, _ ->
 
         }
-        builder.setTitle("Delete everything?")
-        builder.setMessage("Are you sure you want to delete all the users")
+        builder.setTitle(getString(R.string.delete_all_question_title))
+        builder.setMessage(getString(R.string.delete_all_question_message))
         builder.create().show()
     }
 }
