@@ -16,14 +16,16 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.education.notes.R
 import com.education.notes.databinding.FragmentAddNotesBinding
-import com.education.notes.presentation.model.Notes
+import com.education.notes.model.NotesModel
+import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.viewmodel.NotesViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AddNotesFragment : Fragment() {
     private lateinit var mNotesViewModel: NotesViewModel
     private var _binding: FragmentAddNotesBinding? = null
     private val binding get() = _binding!!
-    private var imageURI: String? = null
+    private var imageURI: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +41,8 @@ class AddNotesFragment : Fragment() {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             pickImage.launch(intent)
         }
-
+        val mainActivity = activity as MainActivity
+        mainActivity.setBottomNavigationMenuVisibility(View.GONE)
         return binding.root
     }
 
@@ -49,6 +52,7 @@ class AddNotesFragment : Fragment() {
                 val uriImage = result.data?.data
                 Glide.with(requireContext()).load(uriImage).override(250, 250)
                     .into(binding.addNotesFragmentImageView)
+                if (uriImage != null)
                 imageURI = uriImage.toString()
             }
 
@@ -59,17 +63,17 @@ class AddNotesFragment : Fragment() {
         val description = binding.addNotesFragmentDescription.text.toString()
 
         if (!isNotEmptyChecking(title, description)) {
-            if (imageURI == null) {
+            if (imageURI.isEmpty()) {
                 imageURI = getStandardURI()
             }
             //Create Note Object
-            val note = Notes(0, title, description, imageURI)
+            val note = NotesModel(0, title, description, imageURI)
             //Add Data to DataBase
             mNotesViewModel.addNote(note)
             Toast.makeText(requireContext(), getString(R.string.note_is_added), Toast.LENGTH_LONG)
                 .show()
             //Navigate Back
-            findNavController().navigate(R.id.nav_graph_list_fragment)
+            findNavController().navigateUp()
         } else {
             Toast.makeText(
                 requireContext(),
@@ -91,6 +95,6 @@ class AddNotesFragment : Fragment() {
 
     companion object {
         private const val STANDARD_URI =
-            "android.resource://com.education.notes/drawable/empty_note"
+            "android.resource://com.education.notes/drawable/ic_empty_note"
     }
 }

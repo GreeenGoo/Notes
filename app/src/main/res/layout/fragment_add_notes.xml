@@ -12,10 +12,10 @@
         android:id="@+id/add_notes_fragment_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/add_title_margin_horizontal"
-        android:layout_marginTop="@dimen/add_title_margin_top"
+        android:layout_marginHorizontal="@dimen/xmedium_margin"
+        android:layout_marginTop="@dimen/xlarge_margin"
         android:hint="@string/add_title_hint"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,10 +24,13 @@
         android:id="@+id/add_notes_fragment_description"
         android:layout_width="match_parent"
         android:layout_height="@dimen/add_description_height"
-        android:layout_marginHorizontal="@dimen/add_description_margin_horizontal"
-        android:layout_marginTop="@dimen/add_description_margin_top"
+        android:layout_marginHorizontal="@dimen/xmedium_margin"
+        android:layout_marginTop="@dimen/medium_margin"
         android:hint="@string/add_description_hint"
-        android:inputType="text"
+        android:inputType="textMultiLine"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_title" />
@@ -36,10 +39,11 @@
         android:id="@+id/add_notes_fragment_image_view"
         android:layout_width="@dimen/add_image_view_width"
         android:layout_height="@dimen/add_image_view_height"
-        android:layout_marginTop="@dimen/add_image_view_margin_top"
-        android:layout_marginStart="@dimen/add_image_view_margin_start"
+        android:layout_marginTop="@dimen/xlarge_margin"
+        android:scaleType="centerCrop"
         android:background="@color/add_image_view_background"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_notes_fragment_description" />
 
     <Button
@@ -47,20 +51,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_upload_button_text"
-        android:layout_margin="@dimen/add_upload_button_layout_margin"
-        app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_description"
-        app:layout_constraintLeft_toRightOf="@id/add_notes_fragment_image_view"
-        app:layout_constraintRight_toRightOf="@id/add_notes_fragment_description"/>
+        android:layout_marginTop="@dimen/xlarge_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_image_view" />
 
     <Button
         android:id="@+id/add_notes_fragment_add_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/add_add_button_margin_horizontal"
-        android:layout_marginTop="@dimen/add_add_button_margin_top"
+        android:layout_marginHorizontal="@dimen/xmedium_margin"
+        android:layout_marginBottom="@dimen/medium_margin"
         android:text="@string/add_add_button_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_image_view" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

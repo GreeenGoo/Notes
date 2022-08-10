@@ -1,13 +1,12 @@
-package com.education.notes.presentation.data
+package com.education.notes.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.education.notes.R
-import com.education.notes.presentation.model.Notes
+import com.education.notes.model.NotesModel
 
-@Database(entities = [Notes::class], version = 1, exportSchema = false)
+@Database(entities = [NotesModel::class], version = 1, exportSchema = false)
 abstract class NotesDatabase: RoomDatabase() {
 
     abstract fun notesDao(): NotesDao
@@ -15,14 +14,13 @@ abstract class NotesDatabase: RoomDatabase() {
     companion object{
         @Volatile
         private var INSTANCE: NotesDatabase? = null
-        private const val DATABASE_NAME = "notes_database2"
+        private const val DATABASE_NAME = "notes_database"
 
         fun getDatabase(context: Context): NotesDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null){
                 return tempInstance
             }
-            synchronized(this){
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     NotesDatabase::class.java,
@@ -30,7 +28,6 @@ abstract class NotesDatabase: RoomDatabase() {
                 ).build()
                 INSTANCE = instance
                 return instance
-            }
         }
     }
 }

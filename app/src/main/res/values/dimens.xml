@@ -1,51 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    //padding
+    <dimen name="small_padding">2dp</dimen>
+    <dimen name="xsmall_padding">4dp</dimen>
+    <dimen name="medium_padding">5dp</dimen>
+    <dimen name="xmedium_padding">8dp</dimen>
+    <dimen name="large_padding">16dp</dimen>
+    <dimen name="xlarge_padding">32dp</dimen>
+
+    //margin
+    <dimen name="small_margin">4dp</dimen>
+    <dimen name="xsmall_margin">5dp</dimen>
+    <dimen name="medium_margin">8dp</dimen>
+    <dimen name="xmedium_margin">16dp</dimen>
+    <dimen name="large_margin">24dp</dimen>
+    <dimen name="xlarge_margin">32dp</dimen>
+
+    //textSize
+    <dimen name="small_text_size">10sp</dimen>
+    <dimen name="medium_text_size">15sp</dimen>
+
     //card_view_layout
     <dimen name="card_view_image_view_width">100dp</dimen>
     <dimen name="card_view_image_view_height">100dp</dimen>
-    <dimen name="card_view_constraint_layout_padding">16dp</dimen>
-    <dimen name="card_view_layout_margin">5dp</dimen>
     <dimen name="card_view_card_corner_radius">10dp</dimen>
     <dimen name="card_view_cord_elevation">3dp</dimen>
-    <dimen name="card_view_content_padding">4dp</dimen>
     <dimen name="card_view_title_width">236dp</dimen>
-    <dimen name="card_view_title_margin_start">16dp</dimen>
-    <dimen name="card_view_title_text_size">15sp</dimen>
     <dimen name="card_view_description_width">236dp</dimen>
-    <dimen name="card_view_description_margin_start">16dp</dimen>
-    <dimen name="card_view_description_margin_top">8dp</dimen>
-    <dimen name="card_view_description_text_size">10sp</dimen>
 
     //fragment_add_notes
-    <dimen name="add_title_margin_horizontal">15dp</dimen>
-    <dimen name="add_title_margin_top">30dp</dimen>
-    <dimen name="add_description_height">200dp</dimen>
-    <dimen name="add_description_margin_horizontal">15dp</dimen>
-    <dimen name="add_description_margin_top">10dp</dimen>
+    <dimen name="add_description_height">100dp</dimen>
     <dimen name="add_image_view_width">250dp</dimen>
     <dimen name="add_image_view_height">250dp</dimen>
-    <dimen name="add_image_view_margin_top">10dp</dimen>
-    <dimen name="add_image_view_margin_start">15dp</dimen>
-    <dimen name="add_upload_button_layout_margin">10dp</dimen>
-    <dimen name="add_add_button_margin_horizontal">15dp</dimen>
-    <dimen name="add_add_button_margin_top">10dp</dimen>
-
-    //fragment_notes_list
-    <dimen name="notes_list_add_button_margin_end">24dp</dimen>
-    <dimen name="notes_list_add_button_margin_bottom">24dp</dimen>
-
-    //fragment_update_notes
-    <dimen name="update_title_margin_horizontal">15dp</dimen>
-    <dimen name="update_title_margin_top">30dp</dimen>
-    <dimen name="update_description_height">200dp</dimen>
-    <dimen name="update_description_margin_horizontal">15dp</dimen>
-    <dimen name="update_description_margin_top">10dp</dimen>
-    <dimen name="update_image_view_width">250dp</dimen>
-    <dimen name="update_image_view_height">250dp</dimen>
-    <dimen name="update_image_view_margin_top">10dp</dimen>
-    <dimen name="update_image_view_margin_start">15dp</dimen>
-    <dimen name="update_upload_button_layout_margin">10dp</dimen>
-    <dimen name="update_refresh_button_margin_horizontal">15dp</dimen>
-    <dimen name="update_refresh_button_margin_top">10dp</dimen>
 
 </resources>

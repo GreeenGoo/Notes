@@ -12,19 +12,20 @@
     //NotesListFragment
     <string name="notes_are_removed">Successfully removed everything!</string>
     <string name="delete_all_question_title">Delete everything?</string>
-    <string name="delete_all_question_message">Are you sure you want to delete all the users</string>
+    <string name="delete_all_question_message">Are you sure you want to delete all the notes?</string>
 
     //UpdateNotesFragment
     <string name="note_is_removed">Successfully removed</string>
     <string name="delete_note_question_title">Delete</string>
     <string name="delete_note_question_message">Are you sure you want to delete</string>
-    <string name="note_is_updaded">Successfully updated!</string>
+    <string name="note_is_updated">Successfully updated!</string>
     <string name="fill_out_note_fields">Please, fill out all the fields.</string>
+    <string name="refresh_button">Refresh</string>
 
     //fragment_add_notes
     <string name="add_title_hint">Title</string>
     <string name="add_description_hint">Describe your note…</string>
-    <string name="add_upload_button_text">Upload</string>
+    <string name="add_upload_button_text">Upload a picture</string>
     <string name="add_add_button_text">Add</string>
 
     //fragment_add_notes
