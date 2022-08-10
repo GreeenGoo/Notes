@@ -13,14 +13,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
 import com.education.notes.databinding.FragmentNotesListBinding
+import com.education.notes.model.NotesModel
+import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.viewmodel.NotesViewModel
 
 class NotesListFragment : Fragment() {
 
     private var _binding: FragmentNotesListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mNotesViewModel: NotesViewModel
 
+    private lateinit var mNotesViewModel: NotesViewModel
+    private var notesList: List<NotesModel> = emptyList()
+    private lateinit var adapter: NotesListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,21 +34,42 @@ class NotesListFragment : Fragment() {
         _binding = FragmentNotesListBinding.inflate(inflater, container, false)
 
         //RecyclerView
-        val adapter = NotesListAdapter()
+        recyclerViewInit()
+
+        //NotesViewModel
+        notesViewModelInit()
+
+        binding.notesListFragmentFloatingAddButton.setOnClickListener {
+            findNavController().navigate(R.id.addNotesFragment)
+        }
+        val mainActivity = activity as MainActivity
+        mainActivity.setBottomNavigationMenuVisibility(View.VISIBLE)
+        return binding.root
+    }
+
+    private fun recyclerViewInit() {
+        adapter = NotesListAdapter(::onItemClick)
         val recyclerView = _binding!!.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
 
-        //NotesViewModel
+    private fun notesViewModelInit(){
         mNotesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
+        mNotesViewModel.getAllNotes()
         mNotesViewModel.readAllData.observe(viewLifecycleOwner) { note ->
             adapter.setData(note)
+            notesList = note
         }
+    }
 
-        binding.notesListFragmentFloatingAddButton.setOnClickListener {
-            findNavController().navigate(R.id.nav_graph_add_fragment)
-        }
-        return binding.root
+    private fun onItemClick(position: Int) {
+        val selectedItem = Bundle()
+        selectedItem.putParcelable("currentNote", notesList[position])
+        findNavController().navigate(
+            R.id.action_notesListFragment_to_updateNotesFragment,
+            selectedItem
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,20 +93,24 @@ class NotesListFragment : Fragment() {
     }
 
     private fun deleteAllUsers() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
-            mNotesViewModel.deleteAllNotes()
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.notes_are_removed),
-                Toast.LENGTH_LONG
-            ).show()
-        }
-        builder.setNegativeButton(getString(R.string.no)) { _, _ ->
+        if (notesList.isNotEmpty()) {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
+                mNotesViewModel.deleteAllNotes()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.notes_are_removed),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            builder.setNegativeButton(getString(R.string.no)) { _, _ ->
 
+            }
+            builder.setTitle(getString(R.string.delete_all_question_title))
+            builder.setMessage(getString(R.string.delete_all_question_message))
+            builder.create().show()
+        } else {
+            Toast.makeText(requireContext(), "The database is empty!", Toast.LENGTH_SHORT).show()
         }
-        builder.setTitle(getString(R.string.delete_all_question_title))
-        builder.setMessage(getString(R.string.delete_all_question_message))
-        builder.create().show()
     }
 }
