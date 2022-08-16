@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
-private const val TABLE_NAME = "notes_table1"
+private const val TABLE_NAME = "notes_table"
 
 @Parcelize
 @Entity(tableName = TABLE_NAME)

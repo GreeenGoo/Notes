@@ -5,16 +5,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
-    //AddNotesFragment
+    //AddOrUploadNotesFragment
     <string name="note_is_added">Successfully added!</string>
     <string name="note_is_not_added">Please, fill out all the fields.</string>
-
-    //NotesListFragment
-    <string name="notes_are_removed">Successfully removed everything!</string>
-    <string name="delete_all_question_title">Delete everything?</string>
-    <string name="delete_all_question_message">Are you sure you want to delete all the notes?</string>
-
-    //UpdateNotesFragment
     <string name="note_is_removed">Successfully removed</string>
     <string name="delete_note_question_title">Delete</string>
     <string name="delete_note_question_message">Are you sure you want to delete</string>
@@ -22,17 +15,19 @@
     <string name="fill_out_note_fields">Please, fill out all the fields.</string>
     <string name="refresh_button">Refresh</string>
 
-    //fragment_add_notes
+    //NotesListFragment
+    <string name="notes_are_removed">Successfully removed everything!</string>
+    <string name="delete_all_question_title">Delete everything?</string>
+    <string name="delete_all_question_message">Are you sure you want to delete all the notes?</string>
+    <string name="emptyDatabaseText">The database is empty!</string>
+
+    //fragment_add_or_upload_notes
     <string name="add_title_hint">Title</string>
     <string name="add_description_hint">Describe your note…</string>
     <string name="add_upload_button_text">Upload a picture</string>
     <string name="add_add_button_text">Add</string>
-
-    //fragment_add_notes
-    <string name="update_title_hint">Title</string>
-    <string name="update_description_hint">Describe your note…</string>
-    <string name="update_upload_button_text">Upload</string>
-    <string name="update_refresh_button_text">Refresh</string>
+    <string name="upload_label_text">Upload</string>
+    <string name="upload_button_text">Refresh</string>
 
     //bottom_navigation_menu
     <string name="notes">Notes</string>
@@ -44,6 +39,6 @@
     //nav_graph
     <string name="nav_graph_list_fragment_label">Notes</string>
     <string name="nav_graph_add_fragment_label">Add</string>
-    <string name="nav_graph_update_fragment_label">Update</string>
     <string name="nav_graph_task_fragment_label">Tasks</string>
+    <string name="AddOrUploadedLabel">fragment_tasks</string>
 </resources>

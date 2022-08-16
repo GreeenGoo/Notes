@@ -1,19 +1,17 @@
 package com.education.notes.presentation.fragments.notes.list
 
-import android.graphics.Color
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.NotificationCompat.getColor
-import androidx.core.content.ContextCompat.getColor
-import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.education.notes.R
 import com.education.notes.model.NotesModel
-import com.google.android.material.color.MaterialColors.getColor
-import kotlinx.android.synthetic.main.card_view_layout.view.*
+import kotlinx.android.synthetic.main.card_view_layout.view.card_view
+import kotlinx.android.synthetic.main.card_view_layout.view.item_description
+import kotlinx.android.synthetic.main.card_view_layout.view.item_image
+import kotlinx.android.synthetic.main.card_view_layout.view.item_title
 
 typealias OnItemClickListener = (position: Int) -> Unit
 
@@ -21,7 +19,7 @@ class NotesListAdapter(private val onItemClickListener: OnItemClickListener) :
     RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
 
     private var _notesList = emptyList<NotesModel>()
-    val noteList get() = _notesList
+    private val noteList get() = _notesList
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

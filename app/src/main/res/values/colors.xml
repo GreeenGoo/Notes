@@ -14,7 +14,4 @@
     //fragment_add_notes
     <color name="add_image_view_background">#C5C1C1</color>
 
-    //fragment_add_notes
-    <color name="update_image_view_background">#C5C1C1</color>
-
 </resources>

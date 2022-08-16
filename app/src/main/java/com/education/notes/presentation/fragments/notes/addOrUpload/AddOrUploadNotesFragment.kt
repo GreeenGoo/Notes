@@ -1,4 +1,4 @@
-package com.education.notes.presentation.fragments.notes.add
+package com.education.notes.presentation.fragments.notes.addOrUpload
 
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -22,14 +23,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.education.notes.R
-import com.education.notes.databinding.FragmentAddNotesBinding
+import com.education.notes.databinding.FragmentAddOrUploadNotesBinding
 import com.education.notes.model.NotesModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.viewmodel.NotesViewModel
 
-class AddNotesFragment : Fragment() {
+class AddOrUploadNotesFragment : Fragment() {
     private lateinit var mNotesViewModel: NotesViewModel
-    private var _binding: FragmentAddNotesBinding? = null
+    private var _binding: FragmentAddOrUploadNotesBinding? = null
     private val binding get() = _binding!!
     private var imageURI: String = ""
     private val pickImage =
@@ -47,7 +48,7 @@ class AddNotesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddNotesBinding.inflate(inflater, container, false)
+        _binding = FragmentAddOrUploadNotesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -59,30 +60,41 @@ class AddNotesFragment : Fragment() {
         if (bundleNote == null) {
             addNewNote()
         } else {
-            val menuHost: MenuHost = requireActivity()
-            menuHost.addMenuProvider(object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.delete_menu, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
-                        R.id.menu_delete -> {
-                            deleteNote(bundleNote)
-                            true
-                        }
-                        else -> false
-                    }
-                }
-            }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-            binding.addNotesFragmentTitle.setText(bundleNote.title)
-            binding.addNotesFragmentDescription.setText(bundleNote.description)
-            imageURI = bundleNote.imageURL
-            Glide.with(requireContext()).load(bundleNote.imageURL).override(250, 250)
-                .into(binding.addNotesFragmentImageView)
+            (activity as AppCompatActivity).supportActionBar?.title =
+                getString(R.string.upload_label_text)
+            binding.addNotesFragmentAddButton.text = getString(R.string.upload_button_text)
+            loadSelectedNote(bundleNote)
+            menuHost(bundleNote)
             updateItem(bundleNote)
         }
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun loadSelectedNote(bundleNote: NotesModel) {
+        binding.addNotesFragmentTitle.setText(bundleNote.title)
+        binding.addNotesFragmentDescription.setText(bundleNote.description)
+        imageURI = bundleNote.imageURL
+        Glide.with(requireContext()).load(bundleNote.imageURL).override(250, 250)
+            .into(binding.addNotesFragmentImageView)
+    }
+
+    private fun menuHost(bundleNote: NotesModel) {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.delete_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.menu_delete -> {
+                        deleteNote(bundleNote)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun deleteNote(bundleNote: NotesModel) {
@@ -97,7 +109,6 @@ class AddNotesFragment : Fragment() {
             findNavController().navigate(R.id.notesListFragment)
         }
         builder.setNegativeButton(R.string.no) { _, _ ->
-
         }
         builder.setTitle("${getString(R.string.delete_note_question_title)} ${bundleNote.title}?")
         builder.setMessage("${getString(R.string.delete_note_question_message)} ${bundleNote.title}")
@@ -116,7 +127,6 @@ class AddNotesFragment : Fragment() {
                     getString(R.string.note_is_updated),
                     Toast.LENGTH_LONG
                 ).show()
-//                findNavController().navigate(R.id.notesListFragment)
                 findNavController().navigateUp()
             } else {
                 Toast.makeText(
@@ -150,7 +160,7 @@ class AddNotesFragment : Fragment() {
     private fun insertDataToDataBase() {
         val title = binding.addNotesFragmentTitle.text.toString()
         val description = binding.addNotesFragmentDescription.text.toString()
-        if (!isNotEmptyChecking(title, description)) {
+        if (!(TextUtils.isEmpty(title) || TextUtils.isEmpty(description))) {
             if (imageURI.isEmpty()) {
                 imageURI = getStandardURI()
             }
@@ -168,11 +178,6 @@ class AddNotesFragment : Fragment() {
                 .show()
         }
     }
-
-    private fun isNotEmptyChecking(title: String, description: String): Boolean {
-        return TextUtils.isEmpty(title) || TextUtils.isEmpty(description)
-    }
-
 
     private fun getStandardURI(): String {
         return STANDARD_URI

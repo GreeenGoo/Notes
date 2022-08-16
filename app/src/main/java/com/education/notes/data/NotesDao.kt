@@ -15,9 +15,9 @@ interface NotesDao {
     @Delete
     suspend fun deleteNote (note: NotesModel)
 
-    @Query("DELETE FROM notes_table1")
+    @Query("DELETE FROM notes_table")
     suspend fun deleteAllNotes()
 
-    @Query("SELECT * FROM notes_table1 ORDER BY id ASC")
+    @Query("SELECT * FROM notes_table ORDER BY id ASC")
     suspend fun readAllData(): List<NotesModel>
 }

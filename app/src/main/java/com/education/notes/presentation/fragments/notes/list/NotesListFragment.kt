@@ -2,7 +2,12 @@ package com.education.notes.presentation.fragments.notes.list
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -32,19 +37,20 @@ class NotesListFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentNotesListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //RecyclerView
         recyclerViewInit()
-
         //NotesViewModel
         notesViewModelInit()
-
         binding.notesListFragmentFloatingAddButton.setOnClickListener {
-            findNavController().navigate(R.id.addNotesFragment)
+            findNavController().navigate(R.id.addOrUploadNotesFragment)
         }
-        val mainActivity = activity as MainActivity
-        mainActivity.setBottomNavigationMenuVisibility(View.VISIBLE)
-        return binding.root
+        showBottomNavigationMenu()
+        menuHost()
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun recyclerViewInit() {
@@ -54,7 +60,7 @@ class NotesListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun notesViewModelInit(){
+    private fun notesViewModelInit() {
         mNotesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
         mNotesViewModel.getAllNotes()
         mNotesViewModel.readAllData.observe(viewLifecycleOwner) { note ->
@@ -67,12 +73,12 @@ class NotesListFragment : Fragment() {
         val selectedItem = Bundle()
         selectedItem.putParcelable("currentNote", notesList[position])
         findNavController().navigate(
-            R.id.action_notesListFragment_to_addNotesFragment,
+            R.id.action_notesListFragment_to_addOrUpdateNotesFragment,
             selectedItem
         )
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    private fun menuHost() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -89,7 +95,11 @@ class NotesListFragment : Fragment() {
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun showBottomNavigationMenu() {
+        val mainActivity = activity as MainActivity
+        mainActivity.setBottomNavigationMenuVisibility(View.VISIBLE)
     }
 
     private fun deleteAllUsers() {
@@ -110,7 +120,11 @@ class NotesListFragment : Fragment() {
             builder.setMessage(getString(R.string.delete_all_question_message))
             builder.create().show()
         } else {
-            Toast.makeText(requireContext(), "The database is empty!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.emptyDatabaseText),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

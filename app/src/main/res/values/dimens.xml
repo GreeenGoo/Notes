@@ -29,9 +29,9 @@
     <dimen name="card_view_title_width">236dp</dimen>
     <dimen name="card_view_description_width">236dp</dimen>
 
-    //fragment_add_notes
-    <dimen name="add_description_height">100dp</dimen>
-    <dimen name="add_image_view_width">250dp</dimen>
-    <dimen name="add_image_view_height">250dp</dimen>
+    //fragment_add_or_upload_notes
+    <dimen name="add_or_upload_description_height">100dp</dimen>
+    <dimen name="add_or_upload_image_view_width">250dp</dimen>
+    <dimen name="add_or_upload_image_view_height">250dp</dimen>
 
 </resources>
