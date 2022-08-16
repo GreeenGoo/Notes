@@ -67,7 +67,7 @@ class NotesListFragment : Fragment() {
         val selectedItem = Bundle()
         selectedItem.putParcelable("currentNote", notesList[position])
         findNavController().navigate(
-            R.id.action_notesListFragment_to_updateNotesFragment,
+            R.id.action_notesListFragment_to_addNotesFragment,
             selectedItem
         )
     }
