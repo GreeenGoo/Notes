@@ -27,23 +27,20 @@ class NotesListFragment : Fragment() {
     private var _binding: FragmentNotesListBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var mNotesViewModel: NotesViewModel
+    private lateinit var notesViewModel: NotesViewModel
     private var notesList: List<NotesModel> = emptyList()
-    private lateinit var adapter: NotesListAdapter
+    private var adapter = NotesListAdapter(::onItemClick)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentNotesListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //RecyclerView
         recyclerViewInit()
-        //NotesViewModel
         notesViewModelInit()
         binding.notesListFragmentFloatingAddButton.setOnClickListener {
             findNavController().navigate(R.id.addOrUploadNotesFragment)
@@ -54,24 +51,23 @@ class NotesListFragment : Fragment() {
     }
 
     private fun recyclerViewInit() {
-        adapter = NotesListAdapter(::onItemClick)
-        val recyclerView = _binding!!.recyclerView
+        val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun notesViewModelInit() {
-        mNotesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
-        mNotesViewModel.getAllNotes()
-        mNotesViewModel.readAllData.observe(viewLifecycleOwner) { note ->
-            adapter.setData(note)
-            notesList = note
+        notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
+        notesViewModel.getAllNotes()
+        notesViewModel.readAllData.observe(viewLifecycleOwner) { notes ->
+            adapter.setData(notes)
+            notesList = notes
         }
     }
 
     private fun onItemClick(position: Int) {
         val selectedItem = Bundle()
-        selectedItem.putParcelable("currentNote", notesList[position])
+        selectedItem.putParcelable(NotesViewModel.BUNDLE_KEY, notesList[position])
         findNavController().navigate(
             R.id.action_notesListFragment_to_addOrUpdateNotesFragment,
             selectedItem
@@ -106,12 +102,8 @@ class NotesListFragment : Fragment() {
         if (notesList.isNotEmpty()) {
             val builder = AlertDialog.Builder(requireContext())
             builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
-                mNotesViewModel.deleteAllNotes()
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.notes_are_removed),
-                    Toast.LENGTH_LONG
-                ).show()
+                notesViewModel.deleteAllNotes()
+                showToast(getString(R.string.notes_are_removed))
             }
             builder.setNegativeButton(getString(R.string.no)) { _, _ ->
 
@@ -120,11 +112,15 @@ class NotesListFragment : Fragment() {
             builder.setMessage(getString(R.string.delete_all_question_message))
             builder.create().show()
         } else {
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.emptyDatabaseText),
-                Toast.LENGTH_SHORT
-            ).show()
+            showToast(getString(R.string.emptyDatabaseText))
         }
+    }
+
+    private fun showToast(text: String) {
+        Toast.makeText(
+            requireContext(),
+            text,
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

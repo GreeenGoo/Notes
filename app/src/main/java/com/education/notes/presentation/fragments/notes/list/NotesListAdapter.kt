@@ -19,7 +19,7 @@ class NotesListAdapter(private val onItemClickListener: OnItemClickListener) :
     RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
 
     private var _notesList = emptyList<NotesModel>()
-    private val noteList get() = _notesList
+    private val notesList get() = _notesList
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -30,7 +30,7 @@ class NotesListAdapter(private val onItemClickListener: OnItemClickListener) :
     }
 
     override fun getItemCount(): Int {
-        return noteList.size
+        return notesList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -44,8 +44,8 @@ class NotesListAdapter(private val onItemClickListener: OnItemClickListener) :
         }
     }
 
-    fun setData(note: List<NotesModel>) {
-        this._notesList = note
+    fun setData(notes: List<NotesModel>) {
+        this._notesList = notes
         notifyDataSetChanged()
     }
 }

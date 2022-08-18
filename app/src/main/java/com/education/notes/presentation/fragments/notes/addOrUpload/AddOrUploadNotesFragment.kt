@@ -29,7 +29,7 @@ import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.viewmodel.NotesViewModel
 
 class AddOrUploadNotesFragment : Fragment() {
-    private lateinit var mNotesViewModel: NotesViewModel
+    private lateinit var notesViewModel: NotesViewModel
     private var _binding: FragmentAddOrUploadNotesBinding? = null
     private val binding get() = _binding!!
     private var imageURI: String = ""
@@ -37,7 +37,7 @@ class AddOrUploadNotesFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 val uriImage = result.data?.data
-                Glide.with(requireContext()).load(uriImage).override(250, 250)
+                Glide.with(requireContext()).load(uriImage).override(PICTURE_WIDTH, PICTURE_HEIGHT)
                     .into(binding.addNotesFragmentImageView)
                 if (uriImage != null)
                     imageURI = uriImage.toString()
@@ -53,16 +53,17 @@ class AddOrUploadNotesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mNotesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
+        notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
         uploadPicture()
         hideBottomNavigationMenu()
-        val bundleNote = arguments?.getParcelable<NotesModel>("currentNote")
+        val bundleNote = arguments?.getParcelable<NotesModel>(NotesViewModel.BUNDLE_KEY)
         if (bundleNote == null) {
             addNewNote()
         } else {
-            (activity as AppCompatActivity).supportActionBar?.title =
+            (requireActivity() as AppCompatActivity).supportActionBar?.title =
                 getString(R.string.upload_label_text)
-            binding.addNotesFragmentAddButton.text = getString(R.string.upload_button_text)
+            binding.addOrUploadNotesFragmentAddOrRefreshButton.text =
+                getString(R.string.upload_button_text)
             loadSelectedNote(bundleNote)
             menuHost(bundleNote)
             updateItem(bundleNote)
@@ -74,7 +75,8 @@ class AddOrUploadNotesFragment : Fragment() {
         binding.addNotesFragmentTitle.setText(bundleNote.title)
         binding.addNotesFragmentDescription.setText(bundleNote.description)
         imageURI = bundleNote.imageURL
-        Glide.with(requireContext()).load(bundleNote.imageURL).override(250, 250)
+        Glide.with(requireContext()).load(bundleNote.imageURL)
+            .override(PICTURE_WIDTH, PICTURE_HEIGHT)
             .into(binding.addNotesFragmentImageView)
     }
 
@@ -100,91 +102,77 @@ class AddOrUploadNotesFragment : Fragment() {
     private fun deleteNote(bundleNote: NotesModel) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton(R.string.yes) { _, _ ->
-            mNotesViewModel.deleteNote(bundleNote)
-            Toast.makeText(
-                requireContext(),
-                "${getString(R.string.note_is_removed)} ${bundleNote.title}!",
-                Toast.LENGTH_LONG
-            ).show()
+            notesViewModel.deleteNote(bundleNote)
+            showToast("${getString(R.string.note_is_removed)} ${bundleNote.title}!")
             findNavController().navigate(R.id.notesListFragment)
         }
         builder.setNegativeButton(R.string.no) { _, _ ->
         }
         builder.setTitle("${getString(R.string.delete_note_question_title)} ${bundleNote.title}?")
-        builder.setMessage("${getString(R.string.delete_note_question_message)} ${bundleNote.title}")
+        builder.setMessage("${getString(R.string.delete_note_question_message)} ${bundleNote.title}?")
         builder.create().show()
     }
 
     private fun updateItem(bundleNote: NotesModel) {
-        binding.addNotesFragmentAddButton.setOnClickListener {
+        binding.addOrUploadNotesFragmentAddOrRefreshButton.setOnClickListener {
             val title = binding.addNotesFragmentTitle.text.toString()
             val description = binding.addNotesFragmentDescription.text.toString()
-            if (!(TextUtils.isEmpty(title) || TextUtils.isEmpty(description))) {
+            if (title.isNotEmpty() && description.isNotEmpty()) {
                 val updateNote = NotesModel(bundleNote.id, title, description, imageURI)
-                mNotesViewModel.updateNote(updateNote)
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.note_is_updated),
-                    Toast.LENGTH_LONG
-                ).show()
+                notesViewModel.updateNote(updateNote)
+                showToast(getString(R.string.note_is_updated))
                 findNavController().navigateUp()
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.fill_out_note_fields),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+                showToast(getString(R.string.fill_out_note_fields))
             }
         }
     }
 
     private fun uploadPicture() {
+        var intent: Intent
         binding.addNotesFragmentUploadPictureButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             pickImage.launch(intent)
         }
     }
 
     private fun hideBottomNavigationMenu() {
-        val mainActivity = activity as MainActivity
+        val mainActivity = requireActivity() as MainActivity
         mainActivity.setBottomNavigationMenuVisibility(View.GONE)
     }
 
     private fun addNewNote() {
-        binding.addNotesFragmentAddButton.setOnClickListener {
-            insertDataToDataBase()
-        }
-    }
-
-    private fun insertDataToDataBase() {
-        val title = binding.addNotesFragmentTitle.text.toString()
-        val description = binding.addNotesFragmentDescription.text.toString()
-        if (!(TextUtils.isEmpty(title) || TextUtils.isEmpty(description))) {
-            if (imageURI.isEmpty()) {
-                imageURI = getStandardURI()
+        binding.addOrUploadNotesFragmentAddOrRefreshButton.setOnClickListener {
+            val title = binding.addNotesFragmentTitle.text.toString()
+            val description = binding.addNotesFragmentDescription.text.toString()
+            if (title.isNotEmpty() && description.isNotEmpty()) {
+                if (imageURI.isEmpty()) {
+                    imageURI = getStandardURI()
+                }
+                val note = NotesModel(0, title, description, imageURI)
+                notesViewModel.addNote(note)
+                showToast(getString(R.string.note_is_added))
+                findNavController().navigateUp()
+            } else {
+                showToast(getString(R.string.note_is_not_added))
             }
-            val note = NotesModel(0, title, description, imageURI)
-            mNotesViewModel.addNote(note)
-            Toast.makeText(requireContext(), getString(R.string.note_is_added), Toast.LENGTH_LONG)
-                .show()
-            findNavController().navigateUp()
-        } else {
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.note_is_not_added),
-                Toast.LENGTH_LONG
-            )
-                .show()
         }
     }
 
-    private fun getStandardURI(): String {
-        return STANDARD_URI
+    private fun showToast(text: String) {
+        Toast.makeText(
+            requireContext(),
+            text,
+            Toast.LENGTH_LONG
+        ).show()
     }
+
+    private fun getStandardURI(): String = STANDARD_URI
 
     companion object {
         private const val STANDARD_URI =
             "android.resource://com.education.notes/drawable/ic_empty_note"
+        private const val PICTURE_HEIGHT = 250
+        private const val PICTURE_WIDTH = 250
     }
 }

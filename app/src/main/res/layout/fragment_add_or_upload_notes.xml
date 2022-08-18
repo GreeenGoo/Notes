@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_image_view" />
 
     <Button
-        android:id="@+id/add_notes_fragment_add_button"
+        android:id="@+id/add_or_upload_notes_fragment_add_or_refresh_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/xmedium_margin"

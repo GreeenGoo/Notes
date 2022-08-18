@@ -51,4 +51,8 @@ class NotesViewModel(application: Application): AndroidViewModel(application) {
             readAllData.postValue(emptyList())
         }
     }
+
+    companion object{
+        const val BUNDLE_KEY = "currentNote"
+    }
 }
