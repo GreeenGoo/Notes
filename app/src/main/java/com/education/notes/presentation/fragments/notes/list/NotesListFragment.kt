@@ -103,7 +103,7 @@ class NotesListFragment : Fragment() {
             val builder = AlertDialog.Builder(requireContext())
             builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
                 notesViewModel.deleteAllNotes()
-                showToast(getString(R.string.notes_are_removed))
+                showToast(getString(R.string.everything_is_removed))
             }
             builder.setNegativeButton(getString(R.string.no)) { _, _ ->
 
