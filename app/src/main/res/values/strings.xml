@@ -32,13 +32,4 @@
     //bottom_navigation_menu
     <string name="notes">Notes</string>
     <string name="tasks">Tasks</string>
-
-    //delete_menu
-    <string name="delete_menu_delete">Delete</string>
-
-    //nav_graph
-    <string name="nav_graph_list_fragment_label">Notes</string>
-    <string name="nav_graph_add_fragment_label">Add</string>
-    <string name="nav_graph_task_fragment_label">Tasks</string>
-    <string name="AddOrUploadedLabel">fragment_tasks</string>
 </resources>
