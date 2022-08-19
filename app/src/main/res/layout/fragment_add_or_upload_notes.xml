@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:id="@+id/add_or_upload_notes_fragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.fragments.notes.addOrUpload.AddOrUploadNotesFragment">
+
+    <EditText
+        android:id="@+id/add_notes_fragment_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/xmedium_margin"
+        android:layout_marginTop="@dimen/xlarge_margin"
+        android:hint="@string/add_title_hint"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/add_notes_fragment_description"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/add_or_upload_description_height"
+        android:layout_marginHorizontal="@dimen/xmedium_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:hint="@string/add_description_hint"
+        android:inputType="textMultiLine"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_title" />
+
+    <ImageView
+        android:id="@+id/add_notes_fragment_image_view"
+        android:layout_width="@dimen/add_or_upload_image_view_width"
+        android:layout_height="@dimen/add_or_upload_image_view_height"
+        android:layout_marginTop="@dimen/xlarge_margin"
+        android:scaleType="centerCrop"
+        android:background="@color/add_image_view_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_notes_fragment_description" />
+
+    <Button
+        android:id="@+id/add_notes_fragment_upload_picture_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_upload_button_text"
+        android:layout_marginTop="@dimen/xlarge_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_notes_fragment_image_view" />
+
+    <Button
+        android:id="@+id/add_or_upload_notes_fragment_add_or_refresh_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/xmedium_margin"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:text="@string/add_add_button_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

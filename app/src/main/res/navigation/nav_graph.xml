@@ -3,16 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_graph_notes_fragment">
-
+    app:startDestination="@id/notesListFragment">
     <fragment
-        android:id="@+id/nav_graph_notes_fragment"
-        android:name="com.education.notes.NotesFragment"
-        android:label="fragment_notes"
-        tools:layout="@layout/fragment_notes" />
+        android:id="@+id/notesListFragment"
+        android:name="com.education.notes.presentation.fragments.notes.list.NotesListFragment"
+        android:label="Notes"
+        tools:layout="@layout/fragment_notes_list" >
+        <action
+            android:id="@+id/action_notesListFragment_to_addOrUpdateNotesFragment"
+            app:destination="@id/addOrUploadNotesFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_graph_tasks_fragment"
-        android:name="com.education.notes.TasksFragment"
-        android:label="fragment_tasks"
+        android:id="@+id/tasksFragment"
+        android:name="com.education.notes.presentation.fragments.tasks.TasksFragment"
+        android:label="Tasks"
         tools:layout="@layout/fragment_tasks" />
+    <fragment
+        android:id="@+id/addOrUploadNotesFragment"
+        android:name="com.education.notes.presentation.fragments.notes.addOrUpload.AddOrUploadNotesFragment"
+        android:label="Add"
+        tools:layout="@layout/fragment_add_or_upload_notes" >
+    </fragment>
 </navigation>
