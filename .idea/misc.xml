@@ -18,10 +18,12 @@
         <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_add.xml" value="0.33" />
         <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_add_notes.xml" value="0.40375" />
         <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_add_or_upload_notes.xml" value="0.41920374707259955" />
+        <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_add_or_upload_tasks.xml" value="0.5" />
         <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_list.xml" value="0.1" />
-        <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_notes.xml" value="0.1" />
+        <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_notes.xml" value="0.75" />
         <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_notes_list.xml" value="0.37822014051522246" />
         <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_tasks.xml" value="0.175" />
+        <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_tasks_list.xml" value="0.8243559718969555" />
         <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_update.xml" value="0.1" />
         <entry key="..\:/Uladzislau/Notes/app/src/main/res/layout/fragment_update_notes.xml" value="0.6901960784313725" />
         <entry key="..\:/Uladzislau/Notes/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.15274261603375527" />

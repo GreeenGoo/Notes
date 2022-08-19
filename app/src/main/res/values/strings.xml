@@ -41,4 +41,9 @@
     <string name="nav_graph_add_fragment_label">Add</string>
     <string name="nav_graph_task_fragment_label">Tasks</string>
     <string name="AddOrUploadedLabel">fragment_tasks</string>
+
+    //Tasks
+    //fragment_add_or_upload_tasks
+    <string name="add_task_text_field">Enter a task</string>
+    <string name="add_task_ok_button">OK</string>
 </resources>
