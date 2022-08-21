@@ -14,7 +14,6 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
 import com.education.notes.databinding.FragmentTasksListBinding
@@ -43,7 +42,7 @@ class TasksListFragment : Fragment() {
         recyclerViewInit()
         tasksViewModelInit()
         binding.addOrUploadTaskFloatingAddButton.setOnClickListener {
-            findNavController().navigate(R.id.action_tasksFragment_to_addOrUploadTasksFragment)
+
         }
         showBottomNavigationMenu()
         menuHost()
@@ -68,10 +67,10 @@ class TasksListFragment : Fragment() {
     private fun onItemClick(position: Int) {
         val selectedItem = Bundle()
         selectedItem.putParcelable(TasksViewModel.BUNDLE_KEY, tasksList[position])
-        findNavController().navigate(
+        /*findNavController().navigate(
             R.id.action_tasksFragment_to_addOrUploadTasksFragment,
             selectedItem
-        )
+        )*/
     }
 
     private fun menuHost() {

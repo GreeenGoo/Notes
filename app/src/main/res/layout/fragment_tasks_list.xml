@@ -21,7 +21,55 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="@dimen/large_margin"
-        android:src="@drawable/add_icon"/>
+        android:src="@drawable/add_icon" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/add_or_upload_tasks_add_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_margin"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/medium_padding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/add_or_upload_tasks_add_panel_field_for_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_task_text_field"
+            android:inputType="textMultiLine"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/add_or_upload_tasks_add_panel_ok_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/add_or_upload_tasks_add_panel_ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            android:background="@color/green"
+            android:src="@drawable/ok_button_icon"
+            android:text="@string/add_task_ok_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/add_or_upload_tasks_add_panel_cancel_button"
+            app:layout_constraintStart_toEndOf="@id/add_or_upload_tasks_add_panel_field_for_text"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/add_or_upload_tasks_add_panel_cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:background="@color/red"
+            android:src="@drawable/cancel_button_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -42,7 +42,7 @@
     <string name="AddOrUploadedLabel">fragment_tasks</string>
 
     //Tasks
-    //fragment_add_or_upload_tasks
+    //fragment_tasks_list
     <string name="add_task_text_field">Enter a task</string>
     <string name="add_task_ok_button">OK</string>
 </resources>

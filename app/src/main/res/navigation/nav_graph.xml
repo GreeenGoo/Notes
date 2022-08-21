@@ -14,23 +14,14 @@
             app:destination="@id/addOrUploadNotesFragment" />
     </fragment>
     <fragment
-        android:id="@+id/tasksFragment"
-        android:name="com.education.notes.presentation.fragments.tasks.list.TasksListFragment"
-        android:label="Tasks"
-        tools:layout="@layout/fragment_tasks_list" >
-        <action
-            android:id="@+id/action_tasksFragment_to_addOrUploadTasksFragment"
-            app:destination="@id/addOrUploadTasksFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/addOrUploadNotesFragment"
         android:name="com.education.notes.presentation.fragments.notes.addOrUpload.AddOrUploadNotesFragment"
         android:label="Add"
         tools:layout="@layout/fragment_add_or_upload_notes" >
     </fragment>
     <fragment
-        android:id="@+id/addOrUploadTasksFragment"
-        android:name="com.education.notes.presentation.fragments.tasks.addOrUpload.AddOrUploadTasksFragment"
-        android:label="fragment_add_or_upload_tasks"
-        tools:layout="@layout/fragment_add_or_upload_tasks" />
+        android:id="@+id/tasksFragment"
+        android:name="com.education.notes.presentation.fragments.tasks.list.TasksListFragment"
+        android:label="Tasks"
+        tools:layout="@layout/fragment_tasks_list" />
 </navigation>

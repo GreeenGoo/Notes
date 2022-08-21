@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#34D634</color>
+    <color name="red">#F44336</color>
 
     //card_view_layout
     <color name="card_view_background_color">#3F8BC8</color>
