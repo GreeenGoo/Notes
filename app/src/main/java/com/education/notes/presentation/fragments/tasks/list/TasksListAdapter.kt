@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.education.notes.R
 import com.education.notes.model.TasksModel
-import com.education.notes.presentation.fragments.notes.list.OnItemClickListener
 import kotlinx.android.synthetic.main.task_column.view.item_text
 import kotlinx.android.synthetic.main.task_column.view.task_column
 
-typealias OnItemClickListener = (position: Int) -> Unit
+typealias OnItemClickListener = (position: Int, holder: TasksListAdapter.ViewHolder) -> Unit
 
-class TasksListAdapter(private val onItemClickListener: OnItemClickListener) :
+class TasksListAdapter(private val onItemClickListener:  OnItemClickListener) :
     RecyclerView.Adapter<TasksListAdapter.ViewHolder>() {
     private var _tasksList = emptyList<TasksModel>()
     private val tasksList get() = _tasksList
@@ -35,9 +34,14 @@ class TasksListAdapter(private val onItemClickListener: OnItemClickListener) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = _tasksList[position]
-        holder.itemView.item_text.text = currentItem.text
+        /*if (currentItem.crossed){
+
+        }
+        else{*/
+            holder.itemView.item_text.text = currentItem.text
+       /* }*/
         holder.itemView.task_column.setOnClickListener{
-            onItemClickListener(position)
+            onItemClickListener(position, holder)
         }
     }
 

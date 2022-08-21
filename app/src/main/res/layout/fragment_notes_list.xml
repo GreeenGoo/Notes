@@ -22,7 +22,7 @@
         android:layout_marginEnd="@dimen/large_margin"
         android:layout_marginBottom="@dimen/large_margin"
         android:src="@drawable/add_icon"
+        app:backgroundTint="@color/light_blue"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

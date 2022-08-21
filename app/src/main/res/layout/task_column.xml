@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/task_column"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/xsmall_margin"
-    app:cardBackgroundColor="@color/green"
+    app:cardBackgroundColor="@color/light_green"
     app:cardCornerRadius="@dimen/card_view_card_corner_radius"
     app:cardElevation="@dimen/card_view_cord_elevation"
     app:contentPadding="@dimen/xsmall_padding">
@@ -25,4 +25,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

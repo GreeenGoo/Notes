@@ -12,6 +12,7 @@ private const val TABLE_NAME = "tasks_table"
 data class TasksModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val text: String
+    val text: String,
+    val crossed: Boolean
 ) : Parcelable
 

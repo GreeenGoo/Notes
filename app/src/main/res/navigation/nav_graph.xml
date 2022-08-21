@@ -23,5 +23,5 @@
         android:id="@+id/tasksFragment"
         android:name="com.education.notes.presentation.fragments.tasks.list.TasksListFragment"
         android:label="Tasks"
-        tools:layout="@layout/fragment_tasks_list" />
+        tools:layout="@layout/fragment_tasks_list"/>
 </navigation>

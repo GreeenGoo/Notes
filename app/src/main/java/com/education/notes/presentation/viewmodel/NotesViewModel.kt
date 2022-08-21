@@ -30,9 +30,7 @@ class NotesViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addNote(note)
         }
-    }
-
-    fun updateNote(note: NotesModel) {
+    }fun updateNote(note: NotesModel) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateNote(note)
         }

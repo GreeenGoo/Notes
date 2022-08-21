@@ -2,6 +2,10 @@ package com.education.notes.presentation.fragments.tasks.list
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -20,6 +24,7 @@ import com.education.notes.databinding.FragmentTasksListBinding
 import com.education.notes.model.TasksModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.viewmodel.TasksViewModel
+import kotlinx.android.synthetic.main.task_column.view.item_text
 
 class TasksListFragment : Fragment() {
 
@@ -42,12 +47,47 @@ class TasksListFragment : Fragment() {
         recyclerViewInit()
         tasksViewModelInit()
         binding.addOrUploadTaskFloatingAddButton.setOnClickListener {
-
+            binding.addOrUploadTasksAddPanel.visibility = View.VISIBLE
+            addNewTask()
         }
         showBottomNavigationMenu()
         menuHost()
         super.onViewCreated(view, savedInstanceState)
     }
+
+    private fun addNewTask() {
+        binding.addOrUploadTasksAddPanelOkButton.setOnClickListener {
+            if (binding.addOrUploadTasksAddPanelFieldForText.text.isNotEmpty()) {
+                addTaskToDatabase()
+            } else {
+                showToast(getString(R.string.fill_out_add_task_field))
+            }
+        }
+        binding.addOrUploadTasksAddPanelCancelButton.setOnClickListener {
+            cancelAddPanel()
+        }
+    }
+
+    private fun addTaskToDatabase() {
+        val taskText = binding.addOrUploadTasksAddPanelFieldForText.text.toString()
+        val task = TasksModel(0, taskText, false)
+        tasksViewModel.addTask(task)
+        showToast(getString(R.string.task_is_added))
+        hideAddPanel()
+        tasksViewModelInit()
+        MainActivity.hideKeyboardFrom(requireContext(), requireView())
+    }
+
+    private fun cancelAddPanel() {
+        hideAddPanel()
+        MainActivity.hideKeyboardFrom(requireContext(), requireView())
+    }
+
+    private fun hideAddPanel() {
+        binding.addOrUploadTasksAddPanel.visibility = View.GONE
+        binding.addOrUploadTasksAddPanelFieldForText.text = null
+    }
+
 
     private fun recyclerViewInit() {
         val recyclerView = binding.addOrUploadTasksRecyclerView
@@ -64,13 +104,9 @@ class TasksListFragment : Fragment() {
         }
     }
 
-    private fun onItemClick(position: Int) {
-        val selectedItem = Bundle()
-        selectedItem.putParcelable(TasksViewModel.BUNDLE_KEY, tasksList[position])
-        /*findNavController().navigate(
-            R.id.action_tasksFragment_to_addOrUploadTasksFragment,
-            selectedItem
-        )*/
+    private fun onItemClick(position: Int, holder: TasksListAdapter.ViewHolder) {
+        val crossedText = toCrossLine(tasksList[position].text)
+        holder.itemView.item_text.text = crossedText
     }
 
     private fun menuHost() {
@@ -121,5 +157,13 @@ class TasksListFragment : Fragment() {
             text,
             Toast.LENGTH_LONG
         ).show()
+    }
+
+    companion object{
+        private fun toCrossLine (text: String) : SpannableString {
+            val crossedText = SpannableString(text)
+            crossedText.setSpan(StrikethroughSpan(), 0, crossedText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            return crossedText
+        }
     }
 }
