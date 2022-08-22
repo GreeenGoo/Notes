@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
-import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.Menu
@@ -24,7 +23,6 @@ import com.education.notes.databinding.FragmentTasksListBinding
 import com.education.notes.model.TasksModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.viewmodel.TasksViewModel
-import kotlinx.android.synthetic.main.task_column.view.item_text
 
 class TasksListFragment : Fragment() {
 
@@ -104,9 +102,17 @@ class TasksListFragment : Fragment() {
         }
     }
 
-    private fun onItemClick(position: Int, holder: TasksListAdapter.ViewHolder) {
-        val crossedText = toCrossLine(tasksList[position].text)
-        holder.itemView.item_text.text = crossedText
+    private fun onItemClick(position: Int) {
+        if (tasksList[position].crossed) {
+            tasksViewModel.updateTask(
+                TasksModel(tasksList[position].id, tasksList[position].text, false)
+            )
+        } else {
+            tasksViewModel.updateTask(
+                TasksModel(tasksList[position].id, tasksList[position].text, true)
+            )
+        }
+        tasksViewModelInit()
     }
 
     private fun menuHost() {
@@ -160,9 +166,14 @@ class TasksListFragment : Fragment() {
     }
 
     companion object{
-        private fun toCrossLine (text: String) : SpannableString {
+        fun toCrossLine(text: String): SpannableString {
             val crossedText = SpannableString(text)
-            crossedText.setSpan(StrikethroughSpan(), 0, crossedText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            crossedText.setSpan(
+                StrikethroughSpan(),
+                0,
+                crossedText.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             return crossedText
         }
     }
