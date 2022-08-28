@@ -2,7 +2,6 @@ package com.education.notes.presentation.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.education.notes.data.NotesDatabase
@@ -31,9 +30,7 @@ class NotesViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addNote(note)
         }
-    }
-
-    fun updateNote(note: NotesModel) {
+    }fun updateNote(note: NotesModel) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateNote(note)
         }

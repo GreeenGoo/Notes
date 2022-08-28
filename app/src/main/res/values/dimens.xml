@@ -20,6 +20,7 @@
     //textSize
     <dimen name="small_text_size">10sp</dimen>
     <dimen name="medium_text_size">15sp</dimen>
+    <dimen name="large_text_size">25sp</dimen>
 
     //card_view_layout
     <dimen name="card_view_image_view_width">100dp</dimen>
@@ -33,5 +34,6 @@
     <dimen name="add_or_upload_description_height">100dp</dimen>
     <dimen name="add_or_upload_image_view_width">250dp</dimen>
     <dimen name="add_or_upload_image_view_height">250dp</dimen>
+    <dimen name="add_or_upload_tasks_add_panel_field_for_text_button_height_and_wight">45dp</dimen>
 
 </resources>

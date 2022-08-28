@@ -1,9 +1,11 @@
 package com.education.notes.presentation
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -63,5 +65,13 @@ class MainActivity : AppCompatActivity() {
 
     fun setBottomNavigationMenuVisibility(visibility: Int) {
         binding.mainActivityBottomNavigationView.visibility = visibility
+    }
+
+    companion object{
+        fun hideKeyboardFrom(context: Context, view: View?) {
+            val imm =
+                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view?.windowToken, 0)
+        }
     }
 }

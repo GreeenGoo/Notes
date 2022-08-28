@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Notes</string>
-
+    
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="everything_is_removed">Successfully removed everything!</string>
+    <string name="delete_all_question_title">Delete everything?</string>
+    <string name="delete_all_question_message">Are you sure you want to delete all the table?</string>
+    <string name="emptyDatabaseText">The database is empty!</string>
 
     //AddOrUploadNotesFragment
     <string name="note_is_added">Successfully added!</string>
@@ -15,11 +19,6 @@
     <string name="fill_out_note_fields">Please, fill out all the fields.</string>
     <string name="refresh_button">Refresh</string>
 
-    //NotesListFragment
-    <string name="notes_are_removed">Successfully removed everything!</string>
-    <string name="delete_all_question_title">Delete everything?</string>
-    <string name="delete_all_question_message">Are you sure you want to delete all the notes?</string>
-    <string name="emptyDatabaseText">The database is empty!</string>
 
     //fragment_add_or_upload_notes
     <string name="add_title_hint">Title</string>
@@ -32,4 +31,20 @@
     //bottom_navigation_menu
     <string name="notes">Notes</string>
     <string name="tasks">Tasks</string>
+
+    //delete_menu
+    <string name="delete_menu_delete">Delete</string>
+
+    //nav_graph
+    <string name="nav_graph_list_fragment_label">Notes</string>
+    <string name="nav_graph_add_fragment_label">Add</string>
+    <string name="nav_graph_task_fragment_label">Tasks</string>
+    <string name="AddOrUploadedLabel">fragment_tasks</string>
+
+    //Tasks
+    //fragment_tasks_list
+    <string name="add_task_text_field">Enter a task</string>
+    <string name="add_task_ok_button">OK</string>
+    <string name="fill_out_add_task_field">Fill out an information about task!</string>
+    <string name="task_is_added">Successfully added!</string>
 </resources>
