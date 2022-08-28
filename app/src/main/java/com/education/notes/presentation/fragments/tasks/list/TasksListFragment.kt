@@ -17,12 +17,14 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
 import com.education.notes.databinding.FragmentTasksListBinding
 import com.education.notes.model.TasksModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.viewmodel.TasksViewModel
+import kotlinx.android.synthetic.main.fragment_notes_list.recycler_view
 
 class TasksListFragment : Fragment() {
 
@@ -91,6 +93,8 @@ class TasksListFragment : Fragment() {
         val recyclerView = binding.addOrUploadTasksRecyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val itemTouchHelper = ItemTouchHelper(SwipeToDelete(adapter))
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     private fun tasksViewModelInit() {
@@ -102,15 +106,20 @@ class TasksListFragment : Fragment() {
         }
     }
 
-    private fun onItemClick(position: Int) {
-        if (tasksList[position].crossed) {
-            tasksViewModel.updateTask(
-                TasksModel(tasksList[position].id, tasksList[position].text, false)
-            )
-        } else {
-            tasksViewModel.updateTask(
-                TasksModel(tasksList[position].id, tasksList[position].text, true)
-            )
+    private fun onItemClick(position: Int, action: String) {
+        if (action == CROSS_ACTION){
+            if (tasksList[position].crossed) {
+                tasksViewModel.updateTask(
+                    TasksModel(tasksList[position].id, tasksList[position].text, false)
+                )
+            } else {
+                tasksViewModel.updateTask(
+                    TasksModel(tasksList[position].id, tasksList[position].text, true)
+                )
+            }
+        }
+        else if (action == SWIPE_ACTION){
+            tasksViewModel.deleteTask(tasksList[position])
         }
         tasksViewModelInit()
     }
@@ -176,5 +185,7 @@ class TasksListFragment : Fragment() {
             )
             return crossedText
         }
+        const val CROSS_ACTION = "cross"
+        const val SWIPE_ACTION = "swipe_to_delete"
     }
 }
