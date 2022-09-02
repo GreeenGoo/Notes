@@ -1,6 +1,9 @@
 package com.education.notes.presentation.fragments.tasks.list
 
 import android.app.AlertDialog
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -12,11 +15,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
@@ -24,7 +29,6 @@ import com.education.notes.databinding.FragmentTasksListBinding
 import com.education.notes.model.TasksModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.viewmodel.TasksViewModel
-import kotlinx.android.synthetic.main.fragment_notes_list.recycler_view
 
 class TasksListFragment : Fragment() {
 
@@ -92,8 +96,53 @@ class TasksListFragment : Fragment() {
         val recyclerView = binding.addOrUploadTasksRecyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val itemTouchHelper = ItemTouchHelper(SwipeToDelete(adapter))
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                DividerItemDecoration.VERTICAL
+            )
+        )
+
+        val itemTouchHelper =
+            ItemTouchHelper(object : SwipeHelper(binding.addOrUploadTasksRecyclerView) {
+                override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
+                    val buttons: List<UnderlayButton>
+                    val deleteButton = deleteButton(position)
+                    buttons = listOf(deleteButton)
+                    return buttons
+                }
+            })
+        itemTouchHelper.attachToRecyclerView(binding.addOrUploadTasksRecyclerView)
+        //val itemTouchHelper = ItemTouchHelper(SwipeToDelete(adapter))
+        //itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+        return SwipeHelper.UnderlayButton(
+            requireContext(),
+            getBitmapFromVectorDrawable(requireContext(), R.drawable.delete_icon),
+            "Delete",
+            14f,
+            android.R.color.holo_red_light,
+            object : SwipeHelper.UnderlayButtonClickListener {
+                override fun onClick() {
+                    tasksViewModel.deleteTask(tasksList[position])
+                    showToast("Task is deleted!")
+                    tasksViewModelInit()
+                }
+            })
+    }
+
+    private fun getBitmapFromVectorDrawable(context: Context, drawableId: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(context, drawableId)
+        val bitmap = Bitmap.createBitmap(
+            drawable!!.intrinsicWidth,
+            drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bitmap
     }
 
     private fun tasksViewModelInit() {
