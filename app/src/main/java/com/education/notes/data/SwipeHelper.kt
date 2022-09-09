@@ -1,22 +1,30 @@
-package com.education.notes.presentation.fragments.tasks.list
+package com.education.notes.data
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
-import android.graphics.Typeface
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.education.notes.R
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
+
+private const val TEXT_OF_BUTTON = "DELETE"
+private const val DESTINATION_BETWEEN_BUTTONS = 20
+private const val CORNER_RADIUS = 25f
+private const val TEXT_SIZE = 50f
+private const val HORIZONTAL_PADDING = 50f
+private const val WIDTH_FACTOR = 4
 
 @SuppressLint("ClickableViewAccessibility")
 abstract class SwipeHelper(
@@ -64,11 +72,10 @@ abstract class SwipeHelper(
         var right = itemView.right
         buttons.forEach { button ->
             val width = button.intrinsicWidth / buttons.intrinsicWidth() * abs(dX)
-            val left = right - width
+            val left = right - width + DESTINATION_BETWEEN_BUTTONS
             button.draw(
                 canvas,
-                RectF(left, itemView.top.toFloat(), right.toFloat(), itemView.bottom.toFloat()),
-                itemView
+                RectF(left, itemView.top.toFloat(), right.toFloat(), itemView.bottom.toFloat())
             )
 
             right = left.toInt()
@@ -129,64 +136,63 @@ abstract class SwipeHelper(
 
     abstract fun instantiateUnderlayButton(position: Int): List<UnderlayButton>
 
-    //region UnderlayButton
     interface UnderlayButtonClickListener {
         fun onClick()
     }
 
     class UnderlayButton(
         private val context: Context,
-        private val bitmapPicture: Bitmap,
-        private val title: String,
-        pictureSize: Float,
-        @ColorRes private val colorRes: Int,
         private val clickListener: UnderlayButtonClickListener
     ) {
+        @ColorRes private val colorRes = android.R.color.holo_red_light
         private var clickableRegion: RectF? = null
-
-        private val textSizeInPixel: Float =
-            pictureSize * context.resources.displayMetrics.density // dp to px
-        private val horizontalPadding = 50.0f
         val intrinsicWidth: Float
 
         init {
-            val paint = Paint()
-            paint.textSize = textSizeInPixel
-            paint.typeface = Typeface.DEFAULT_BOLD
-            paint.textAlign = Paint.Align.LEFT
             val titleBounds = Rect()
-            paint.getTextBounds(title, 0, title.length, titleBounds)
-            intrinsicWidth = titleBounds.width() + 2 * horizontalPadding
+            intrinsicWidth = titleBounds.width() + WIDTH_FACTOR * HORIZONTAL_PADDING
         }
 
-        fun draw(canvas: Canvas, rect: RectF, itemView: View) {
+        fun draw(canvas: Canvas, rect: RectF) {
             val paint = Paint()
-
             // Draw background
             paint.color = ContextCompat.getColor(context, colorRes)
-            canvas.drawRoundRect(rect, 25f, 25f, paint)
+            canvas.drawRoundRect(rect, CORNER_RADIUS, CORNER_RADIUS, paint)
 
-            // Draw title
-            paint.color = ContextCompat.getColor(context, android.R.color.white)
-            paint.textSize = textSizeInPixel
-            paint.typeface = Typeface.DEFAULT_BOLD
-            paint.textAlign = Paint.Align.LEFT
+            try {
+                VectorDrawableCompat.create(
+                    context.resources,
+                    R.drawable.delete_icon,
+                    null
+                )?.let { drawable ->
+                    canvas.save()
+                    drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+                    canvas.translate(
+                        rect.centerX() - drawable.intrinsicWidth / 2F,
+                        rect.centerY() - drawable.intrinsicHeight / 2F
+                    )
+                    drawable.draw(canvas)
+                    canvas.restore()
 
-            val titleBounds = Rect()
-            paint.getTextBounds(title, 0, title.length, titleBounds)
-
-            val y = rect.height() / 2 + titleBounds.height() / 2 - titleBounds.bottom
-//            canvas.drawText(title, rect.left + horizontalPadding, rect.top + y, paint)
-
-            val iconDest = RectF(
-                itemView.right - 2 * 100f,
-                itemView.top + 100f,
-                itemView.right - 100f,
-                itemView.bottom - 100f
-            )
-            canvas.drawBitmap(bitmapPicture, null, iconDest, paint)
-            canvas.drawText(title, rect.left + horizontalPadding, rect.top + y, paint)
+                }
+            } catch (ex: Exception) {
+                drawText(canvas, rect, paint)
+            }
             clickableRegion = rect
+        }
+
+        private fun drawText(c: Canvas, button: RectF, p: Paint) {
+            val textSize = TEXT_SIZE
+            p.color = Color.WHITE
+            p.isAntiAlias = true
+            p.textSize = textSize
+            val textWidth = p.measureText(TEXT_OF_BUTTON)
+            c.drawText(
+                TEXT_OF_BUTTON,
+                button.centerX() - textWidth / 2,
+                button.centerY() + textSize / 2,
+                p
+            )
         }
 
         fun handle(event: MotionEvent) {
@@ -197,7 +203,6 @@ abstract class SwipeHelper(
             }
         }
     }
-    //endregion
 }
 
 private fun List<SwipeHelper.UnderlayButton>.intrinsicWidth(): Float {

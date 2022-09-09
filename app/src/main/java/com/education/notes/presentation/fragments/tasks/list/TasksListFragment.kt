@@ -1,9 +1,6 @@
 package com.education.notes.presentation.fragments.tasks.list
 
 import android.app.AlertDialog
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -15,7 +12,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -25,6 +21,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
+import com.education.notes.data.SwipeHelper
 import com.education.notes.databinding.FragmentTasksListBinding
 import com.education.notes.model.TasksModel
 import com.education.notes.presentation.MainActivity
@@ -113,36 +110,18 @@ class TasksListFragment : Fragment() {
                 }
             })
         itemTouchHelper.attachToRecyclerView(binding.addOrUploadTasksRecyclerView)
-        //val itemTouchHelper = ItemTouchHelper(SwipeToDelete(adapter))
-        //itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
         return SwipeHelper.UnderlayButton(
             requireContext(),
-            getBitmapFromVectorDrawable(requireContext(), R.drawable.delete_icon),
-            "Delete",
-            14f,
-            android.R.color.holo_red_light,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
                     tasksViewModel.deleteTask(tasksList[position])
-                    showToast("Task is deleted!")
+                    showToast(getString(R.string.task_is_deleted))
                     tasksViewModelInit()
                 }
             })
-    }
-
-    private fun getBitmapFromVectorDrawable(context: Context, drawableId: Int): Bitmap {
-        val drawable = ContextCompat.getDrawable(context, drawableId)
-        val bitmap = Bitmap.createBitmap(
-            drawable!!.intrinsicWidth,
-            drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
-        return bitmap
     }
 
     private fun tasksViewModelInit() {
@@ -154,20 +133,15 @@ class TasksListFragment : Fragment() {
         }
     }
 
-    private fun onItemClick(position: Int, action: String) {
-        if (action == CROSS_ACTION){
-            if (tasksList[position].crossed) {
-                tasksViewModel.updateTask(
-                    TasksModel(tasksList[position].id, tasksList[position].text, false)
-                )
-            } else {
-                tasksViewModel.updateTask(
-                    TasksModel(tasksList[position].id, tasksList[position].text, true)
-                )
-            }
-        }
-        else if (action == SWIPE_ACTION){
-            tasksViewModel.deleteTask(tasksList[position])
+    private fun onItemClick(position: Int) {
+        if (tasksList[position].crossed) {
+            tasksViewModel.updateTask(
+                TasksModel(tasksList[position].id, tasksList[position].text, false)
+            )
+        } else {
+            tasksViewModel.updateTask(
+                TasksModel(tasksList[position].id, tasksList[position].text, true)
+            )
         }
         tasksViewModelInit()
     }
@@ -233,7 +207,5 @@ class TasksListFragment : Fragment() {
             )
             return crossedText
         }
-        const val CROSS_ACTION = "cross"
-        const val SWIPE_ACTION = "swipe_to_delete"
     }
 }

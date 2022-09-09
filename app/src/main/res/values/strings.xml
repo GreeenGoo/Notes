@@ -47,4 +47,5 @@
     <string name="add_task_ok_button">OK</string>
     <string name="fill_out_add_task_field">Fill out an information about task!</string>
     <string name="task_is_added">Successfully added!</string>
+    <string name="task_is_deleted">Task is deleted!</string>
 </resources>

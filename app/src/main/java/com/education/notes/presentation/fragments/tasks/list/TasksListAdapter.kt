@@ -9,7 +9,7 @@ import com.education.notes.model.TasksModel
 import kotlinx.android.synthetic.main.task_column.view.item_text
 import kotlinx.android.synthetic.main.task_column.view.task_column
 
-typealias OnItemClickListener = (position: Int, action: String) -> Unit
+typealias OnItemClickListener = (position: Int) -> Unit
 
 class TasksListAdapter(private val onItemClickListener:  OnItemClickListener) :
     RecyclerView.Adapter<TasksListAdapter.ViewHolder>() {
@@ -40,12 +40,8 @@ class TasksListAdapter(private val onItemClickListener:  OnItemClickListener) :
             holder.itemView.item_text.text = currentItem.text
         }
         holder.itemView.task_column.setOnClickListener {
-            onItemClickListener(position, TasksListFragment.CROSS_ACTION)
+            onItemClickListener(position)
         }
-    }
-
-    fun deleteItem(position: Int){
-        onItemClickListener(position, TasksListFragment.SWIPE_ACTION)
     }
 
     fun setData (tasks: List<TasksModel>){
