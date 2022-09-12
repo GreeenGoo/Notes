@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.education.notes.R
 import com.education.notes.model.TasksModel
 import kotlinx.android.synthetic.main.task_column.view.item_text
-import kotlinx.android.synthetic.main.task_column.view.task_column
 
 typealias OnItemClickListener = (position: Int) -> Unit
 
@@ -39,7 +38,7 @@ class TasksListAdapter(private val onItemClickListener:  OnItemClickListener) :
         } else {
             holder.itemView.item_text.text = currentItem.text
         }
-        holder.itemView.task_column.setOnClickListener {
+        holder.itemView.item_text.setOnClickListener {
             onItemClickListener(position)
         }
     }

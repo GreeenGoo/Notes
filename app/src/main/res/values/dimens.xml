@@ -29,6 +29,7 @@
     <dimen name="card_view_cord_elevation">3dp</dimen>
     <dimen name="card_view_title_width">236dp</dimen>
     <dimen name="card_view_description_width">236dp</dimen>
+    <dimen name="task_column_margin">15dp</dimen>
 
     //fragment_add_or_upload_notes
     <dimen name="add_or_upload_description_height">100dp</dimen>

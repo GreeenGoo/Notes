@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.education.notes.R
 import com.education.notes.databinding.ActivityMainBinding
@@ -26,14 +27,14 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        setupActionBarWithNavController(navController)
+        val appBarConfiguration = AppBarConfiguration
+            .Builder(
+                R.id.notesListFragment,
+                R.id.tasksFragment)
+            .build()
 
-        supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.findNavController()
-            ?.let {
-                setupActionBarWithNavController(
-                    it
-                )
-            }
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
         bottomNavigationView = binding.mainActivityBottomNavigationView
         initBottomNavView(bottomNavigationView, navController)
     }

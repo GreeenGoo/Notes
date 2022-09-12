@@ -143,7 +143,7 @@ class TasksListFragment : Fragment() {
                 TasksModel(tasksList[position].id, tasksList[position].text, true)
             )
         }
-        tasksViewModelInit()
+            tasksViewModel.getAllTasks()
     }
 
     private fun menuHost() {
