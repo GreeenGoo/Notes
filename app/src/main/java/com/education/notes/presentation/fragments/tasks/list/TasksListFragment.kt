@@ -31,6 +31,7 @@ class TasksListFragment : Fragment() {
 
     private var _binding: FragmentTasksListBinding? = null
     private val binding get() = _binding!!
+    private var menuItemForVisibility: MenuItem? = null
     private lateinit var tasksViewModel: TasksViewModel
     private var tasksList: List<TasksModel> = emptyList()
     private var adapter = TasksListAdapter(::onItemClick)
@@ -47,7 +48,7 @@ class TasksListFragment : Fragment() {
         recyclerViewInit()
         tasksViewModelInit()
         binding.addOrUploadTaskFloatingAddButton.setOnClickListener {
-            binding.addOrUploadTasksAddPanel.visibility = View.VISIBLE
+            binding.groupForAdd.visibility = View.VISIBLE
             addNewTask()
         }
         showBottomNavigationMenu()
@@ -84,7 +85,7 @@ class TasksListFragment : Fragment() {
     }
 
     private fun hideAddPanel() {
-        binding.addOrUploadTasksAddPanel.visibility = View.GONE
+        binding.groupForAdd.visibility = View.GONE
         binding.addOrUploadTasksAddPanelFieldForText.text = null
     }
 
@@ -130,6 +131,7 @@ class TasksListFragment : Fragment() {
         tasksViewModel.readAllData.observe(viewLifecycleOwner) { tasks ->
             adapter.setData(tasks)
             tasksList = tasks
+            hideDeleteIconIfDatabaseIsEmpty()
         }
     }
 
@@ -146,11 +148,22 @@ class TasksListFragment : Fragment() {
             tasksViewModel.getAllTasks()
     }
 
+    private fun hideDeleteIconIfDatabaseIsEmpty() {
+        menuItemForVisibility?.isVisible = tasksList.isNotEmpty()
+    }
+
     private fun menuHost() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.delete_menu, menu)
+            }
+
+            override fun onPrepareMenu(menu: Menu) {
+                val itemMenu = menu.findItem(R.id.menu_delete)
+                hideDeleteIconIfDatabaseIsEmpty()
+                menuItemForVisibility = itemMenu
+                super.onPrepareMenu(menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -171,10 +184,10 @@ class TasksListFragment : Fragment() {
     }
 
     private fun deleteAllUsers() {
-        if (tasksList.isNotEmpty()) {
             val builder = AlertDialog.Builder(requireContext())
             builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
                 tasksViewModel.deleteAllTasks()
+                menuItemForVisibility?.isVisible = false
                 showToast(getString(R.string.everything_is_removed))
             }
             builder.setNegativeButton(getString(R.string.no)) { _, _ ->
@@ -183,9 +196,6 @@ class TasksListFragment : Fragment() {
             builder.setTitle(getString(R.string.delete_all_question_title))
             builder.setMessage(getString(R.string.delete_all_question_message))
             builder.create().show()
-        } else{
-            showToast(getString(R.string.emptyDatabaseText))
-        }
     }
 
     private fun showToast(text: String) {

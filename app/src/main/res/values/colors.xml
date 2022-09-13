@@ -11,11 +11,11 @@
     <color name="red">#F44336</color>
     <color name="light_blue">#3F8BC8</color>
 
-    <color name="background_color_night">#33BCB1D3</color>
+    <color name="hint_color">#33BCB1D3</color>
 
     //light_theme
     <color name="text_color_light_theme">#756B6B</color>
-    <color name="text_color_hint_light_theme">#33BCB1D3</color>
+    <color name="text_color_hint">#A1FFFFFF</color>
     <color name="background_light_theme">#CFC8C8</color>
     //notes_card_view_style
     <color name="notes_card_background_color">#3F8BC8</color>

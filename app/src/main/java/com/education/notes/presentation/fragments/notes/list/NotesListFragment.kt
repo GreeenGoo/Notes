@@ -143,7 +143,6 @@ class NotesListFragment : Fragment() {
     }
 
     private fun deleteAllUsers() {
-        if (notesList.isNotEmpty()) {
             val builder = AlertDialog.Builder(requireContext())
             builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
                 notesViewModel.deleteAllNotes()
@@ -156,9 +155,6 @@ class NotesListFragment : Fragment() {
             builder.setTitle(getString(R.string.delete_all_question_title))
             builder.setMessage(getString(R.string.delete_all_question_message))
             builder.create().show()
-        } else {
-            showToast(getString(R.string.emptyDatabaseText))
-        }
     }
 
     private fun showToast(text: String) {
