@@ -1,6 +1,8 @@
 package com.education.notes.presentation.fragments.tasks.list
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -11,6 +13,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -21,18 +24,18 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
-import com.education.notes.data.SwipeHelper
 import com.education.notes.databinding.FragmentTasksListBinding
 import com.education.notes.model.TasksModel
 import com.education.notes.presentation.MainActivity
+import com.education.notes.presentation.utils.SwipeHelper
 import com.education.notes.presentation.viewmodel.TasksViewModel
 
 class TasksListFragment : Fragment() {
 
+    private lateinit var tasksViewModel: TasksViewModel
     private var _binding: FragmentTasksListBinding? = null
     private val binding get() = _binding!!
     private var menuItemForVisibility: MenuItem? = null
-    private lateinit var tasksViewModel: TasksViewModel
     private var tasksList: List<TasksModel> = emptyList()
     private var adapter = TasksListAdapter(::onItemClick)
 
@@ -45,6 +48,7 @@ class TasksListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         recyclerViewInit()
         tasksViewModelInit()
         binding.addOrUploadTaskFloatingAddButton.setOnClickListener {
@@ -53,7 +57,6 @@ class TasksListFragment : Fragment() {
         }
         showBottomNavigationMenu()
         menuHost()
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun addNewTask() {
@@ -76,12 +79,18 @@ class TasksListFragment : Fragment() {
         showToast(getString(R.string.task_is_added))
         hideAddPanel()
         tasksViewModelInit()
-        MainActivity.hideKeyboardFrom(requireContext(), requireView())
+        hideKeyboardFrom(requireContext(), requireView())
     }
 
     private fun cancelAddPanel() {
         hideAddPanel()
-        MainActivity.hideKeyboardFrom(requireContext(), requireView())
+        hideKeyboardFrom(requireContext(), requireView())
+    }
+
+    private fun hideKeyboardFrom(context: Context, view: View?) {
+        val inputMethodManager =
+            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     private fun hideAddPanel() {
@@ -169,7 +178,7 @@ class TasksListFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.menu_delete -> {
-                        deleteAllUsers()
+                        deleteAllTasks()
                         true
                     }
                     else -> false
@@ -183,30 +192,25 @@ class TasksListFragment : Fragment() {
         mainActivity.setBottomNavigationMenuVisibility(View.VISIBLE)
     }
 
-    private fun deleteAllUsers() {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
-                tasksViewModel.deleteAllTasks()
-                menuItemForVisibility?.isVisible = false
-                showToast(getString(R.string.everything_is_removed))
-            }
-            builder.setNegativeButton(getString(R.string.no)) { _, _ ->
+    private fun deleteAllTasks() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
+            tasksViewModel.deleteAllTasks()
+            menuItemForVisibility?.isVisible = false
+            showToast(getString(R.string.everything_is_removed))
+        }
+        builder.setNegativeButton(getString(R.string.no)) { _, _ ->
 
-            }
-            builder.setTitle(getString(R.string.delete_all_question_title))
-            builder.setMessage(getString(R.string.delete_all_question_message))
-            builder.create().show()
+        }
+        builder.setTitle(getString(R.string.delete_all_question_title))
+        builder.setMessage(getString(R.string.delete_all_question_message))
+        builder.create().show()
     }
 
-    private fun showToast(text: String) {
-        Toast.makeText(
-            requireContext(),
-            text,
-            Toast.LENGTH_LONG
-        ).show()
-    }
+    private fun showToast(text: String) =
+        Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
 
-    companion object{
+    companion object {
         fun toCrossLine(text: String): SpannableString {
             val crossedText = SpannableString(text)
             crossedText.setSpan(

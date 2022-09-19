@@ -23,8 +23,8 @@ import com.education.notes.presentation.viewmodel.NotesViewModel
 class AddOrUploadNotesFragment : Fragment() {
     private lateinit var notesViewModel: NotesViewModel
     private var _binding: FragmentAddOrUploadNotesBinding? = null
-    private val binding get() = _binding!!
     private var imageURI: String = ""
+    private val binding get() = _binding!!
     private val pickImage =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -45,6 +45,7 @@ class AddOrUploadNotesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
         uploadPicture()
         hideBottomNavigationMenu()
@@ -59,7 +60,6 @@ class AddOrUploadNotesFragment : Fragment() {
             loadSelectedNote(bundleNote)
             updateItem(bundleNote)
         }
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun loadSelectedNote(bundleNote: NotesModel) {
@@ -95,8 +95,7 @@ class AddOrUploadNotesFragment : Fragment() {
     }
 
     private fun hideBottomNavigationMenu() {
-        val mainActivity = requireActivity() as MainActivity
-        mainActivity.setBottomNavigationMenuVisibility(View.GONE)
+        (requireActivity() as MainActivity).setBottomNavigationMenuVisibility(View.GONE)
     }
 
     private fun addNewNote() {

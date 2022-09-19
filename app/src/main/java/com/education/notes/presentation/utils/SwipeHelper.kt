@@ -1,4 +1,4 @@
-package com.education.notes.data
+package com.education.notes.presentation.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,13 +18,6 @@ import com.education.notes.R
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
-
-private const val TEXT_OF_BUTTON = "DELETE"
-private const val DESTINATION_BETWEEN_BUTTONS = 20
-private const val CORNER_RADIUS = 25f
-private const val TEXT_SIZE = 50f
-private const val HORIZONTAL_PADDING = 50f
-private const val WIDTH_FACTOR = 4
 
 @SuppressLint("ClickableViewAccessibility")
 abstract class SwipeHelper(
@@ -54,32 +47,6 @@ abstract class SwipeHelper(
 
     init {
         recyclerView.setOnTouchListener(touchListener)
-    }
-
-    private fun recoverSwipedItem() {
-        while (!recoverQueue.isEmpty()) {
-            val position = recoverQueue.poll() ?: return
-            recyclerView.adapter?.notifyItemChanged(position)
-        }
-    }
-
-    private fun drawButtons(
-        canvas: Canvas,
-        buttons: List<UnderlayButton>,
-        itemView: View,
-        dX: Float
-    ) {
-        var right = itemView.right
-        buttons.forEach { button ->
-            val width = button.intrinsicWidth / buttons.intrinsicWidth() * abs(dX)
-            val left = right - width + DESTINATION_BETWEEN_BUTTONS
-            button.draw(
-                canvas,
-                RectF(left, itemView.top.toFloat(), right.toFloat(), itemView.bottom.toFloat())
-            )
-
-            right = left.toInt()
-        }
     }
 
     override fun onChildDraw(
@@ -132,6 +99,32 @@ abstract class SwipeHelper(
         if (swipedPosition != position) recoverQueue.add(swipedPosition)
         swipedPosition = position
         recoverSwipedItem()
+    }
+
+    private fun recoverSwipedItem() {
+        while (!recoverQueue.isEmpty()) {
+            val position = recoverQueue.poll() ?: return
+            recyclerView.adapter?.notifyItemChanged(position)
+        }
+    }
+
+    private fun drawButtons(
+        canvas: Canvas,
+        buttons: List<UnderlayButton>,
+        itemView: View,
+        dX: Float
+    ) {
+        var right = itemView.right
+        buttons.forEach { button ->
+            val width = button.intrinsicWidth / buttons.intrinsicWidth() * abs(dX)
+            val left = right - width + DESTINATION_BETWEEN_BUTTONS
+            button.draw(
+                canvas,
+                RectF(left, itemView.top.toFloat(), right.toFloat(), itemView.bottom.toFloat())
+            )
+
+            right = left.toInt()
+        }
     }
 
     abstract fun instantiateUnderlayButton(position: Int): List<UnderlayButton>
@@ -202,6 +195,15 @@ abstract class SwipeHelper(
                 }
             }
         }
+    }
+
+    companion object {
+        private const val TEXT_OF_BUTTON = "DELETE"
+        private const val DESTINATION_BETWEEN_BUTTONS = 20
+        private const val CORNER_RADIUS = 25f
+        private const val TEXT_SIZE = 50f
+        private const val HORIZONTAL_PADDING = 50f
+        private const val WIDTH_FACTOR = 4
     }
 }
 

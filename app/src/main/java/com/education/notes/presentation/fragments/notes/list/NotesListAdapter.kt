@@ -18,8 +18,7 @@ typealias OnItemClickListener = (position: Int) -> Unit
 class NotesListAdapter(private val onItemClickListener: OnItemClickListener) :
     RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
 
-    private var _notesList = emptyList<NotesModel>()
-    private val notesList get() = _notesList
+    private var notesList = emptyList<NotesModel>()
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -34,7 +33,7 @@ class NotesListAdapter(private val onItemClickListener: OnItemClickListener) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = _notesList[position]
+        val currentItem = notesList[position]
         holder.itemView.item_title.text = currentItem.title
         holder.itemView.item_description.text = currentItem.description
         Glide.with(holder.itemView.context).load(Uri.parse(currentItem.imageURL))
@@ -45,7 +44,7 @@ class NotesListAdapter(private val onItemClickListener: OnItemClickListener) :
     }
 
     fun setData(notes: List<NotesModel>) {
-        this._notesList = notes
+        this.notesList = notes
         notifyDataSetChanged()
     }
 }
