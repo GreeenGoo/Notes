@@ -7,14 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.education.notes.R
 import com.education.notes.model.TasksModel
 import kotlinx.android.synthetic.main.task_column.view.item_text
-import kotlinx.android.synthetic.main.task_column.view.task_column
 
-typealias OnItemClickListener = (position: Int, action: String) -> Unit
+typealias OnItemClickListener = (position: Int) -> Unit
 
 class TasksListAdapter(private val onItemClickListener:  OnItemClickListener) :
     RecyclerView.Adapter<TasksListAdapter.ViewHolder>() {
-    private var _tasksList = emptyList<TasksModel>()
-    private val tasksList get() = _tasksList
+    private var tasksList = emptyList<TasksModel>()
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -33,23 +31,19 @@ class TasksListAdapter(private val onItemClickListener:  OnItemClickListener) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = _tasksList[position]
+        val currentItem = tasksList[position]
         if (currentItem.crossed) {
             holder.itemView.item_text.text = TasksListFragment.toCrossLine(currentItem.text)
         } else {
             holder.itemView.item_text.text = currentItem.text
         }
-        holder.itemView.task_column.setOnClickListener {
-            onItemClickListener(position, TasksListFragment.CROSS_ACTION)
+        holder.itemView.item_text.setOnClickListener {
+            onItemClickListener(position)
         }
     }
 
-    fun deleteItem(position: Int){
-        onItemClickListener(position, TasksListFragment.SWIPE_ACTION)
-    }
-
     fun setData (tasks: List<TasksModel>){
-        this._tasksList = tasks
+        this.tasksList = tasks
         notifyDataSetChanged()
     }
 }

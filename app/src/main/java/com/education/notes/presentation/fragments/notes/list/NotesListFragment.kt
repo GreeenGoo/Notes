@@ -15,19 +15,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
 import com.education.notes.databinding.FragmentNotesListBinding
 import com.education.notes.model.NotesModel
 import com.education.notes.presentation.MainActivity
+import com.education.notes.presentation.utils.SwipeHelper
 import com.education.notes.presentation.viewmodel.NotesViewModel
 
 class NotesListFragment : Fragment() {
 
+    private lateinit var notesViewModel: NotesViewModel
     private var _binding: FragmentNotesListBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var notesViewModel: NotesViewModel
+    private var menuItemForVisibility: MenuItem? = null
     private var notesList: List<NotesModel> = emptyList()
     private var adapter = NotesListAdapter(::onItemClick)
 
@@ -40,6 +42,7 @@ class NotesListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         recyclerViewInit()
         notesViewModelInit()
         binding.notesListFragmentFloatingAddButton.setOnClickListener {
@@ -47,13 +50,22 @@ class NotesListFragment : Fragment() {
         }
         showBottomNavigationMenu()
         menuHost()
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun recyclerViewInit() {
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val itemTouchHelper =
+            ItemTouchHelper(object : SwipeHelper(binding.recyclerView) {
+                override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
+                    val buttons: List<UnderlayButton>
+                    val deleteButton = deleteButton(position)
+                    buttons = listOf(deleteButton)
+                    return buttons
+                }
+            })
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
 
     private fun notesViewModelInit() {
@@ -62,7 +74,12 @@ class NotesListFragment : Fragment() {
         notesViewModel.readAllData.observe(viewLifecycleOwner) { notes ->
             adapter.setData(notes)
             notesList = notes
+            hideDeleteIconIfDatabaseIsEmpty()
         }
+    }
+
+    private fun hideDeleteIconIfDatabaseIsEmpty() {
+        menuItemForVisibility?.isVisible = notesList.isNotEmpty()
     }
 
     private fun onItemClick(position: Int) {
@@ -74,6 +91,26 @@ class NotesListFragment : Fragment() {
         )
     }
 
+    private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+        return SwipeHelper.UnderlayButton(
+            requireContext(),
+            object : SwipeHelper.UnderlayButtonClickListener {
+                override fun onClick() {
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setPositiveButton(R.string.yes) { _, _ ->
+                        notesViewModel.deleteNote(notesList[position])
+                        showToast("${getString(R.string.note_is_removed)} ${notesList[position].title}!")
+                        notesViewModelInit()
+                    }
+                    builder.setNegativeButton(R.string.no) { _, _ ->
+                    }
+                    builder.setTitle("${getString(R.string.delete_note_question_title)} ${notesList[position].title}?")
+                    builder.setMessage("${getString(R.string.delete_note_question_message)} ${notesList[position].title}?")
+                    builder.create().show()
+                }
+            })
+    }
+
     private fun menuHost() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
@@ -81,10 +118,17 @@ class NotesListFragment : Fragment() {
                 menuInflater.inflate(R.menu.delete_menu, menu)
             }
 
+            override fun onPrepareMenu(menu: Menu) {
+                val itemMenu = menu.findItem(R.id.menu_delete)
+                hideDeleteIconIfDatabaseIsEmpty()
+                menuItemForVisibility = itemMenu
+                super.onPrepareMenu(menu)
+            }
+
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.menu_delete -> {
-                        deleteAllUsers()
+                        deleteAllNotes()
                         true
                     }
                     else -> false
@@ -98,29 +142,21 @@ class NotesListFragment : Fragment() {
         mainActivity.setBottomNavigationMenuVisibility(View.VISIBLE)
     }
 
-    private fun deleteAllUsers() {
-        if (notesList.isNotEmpty()) {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
-                notesViewModel.deleteAllNotes()
-                showToast(getString(R.string.everything_is_removed))
-            }
-            builder.setNegativeButton(getString(R.string.no)) { _, _ ->
+    private fun deleteAllNotes() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
+            notesViewModel.deleteAllNotes()
+            menuItemForVisibility?.isVisible = false
+            showToast(getString(R.string.everything_is_removed))
+        }
+        builder.setNegativeButton(getString(R.string.no)) { _, _ ->
 
-            }
-            builder.setTitle(getString(R.string.delete_all_question_title))
+        }
+        builder.setTitle(getString(R.string.delete_all_question_title))
             builder.setMessage(getString(R.string.delete_all_question_message))
             builder.create().show()
-        } else {
-            showToast(getString(R.string.emptyDatabaseText))
-        }
     }
 
-    private fun showToast(text: String) {
-        Toast.makeText(
-            requireContext(),
-            text,
-            Toast.LENGTH_LONG
-        ).show()
-    }
+    private fun showToast(text: String) =
+        Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
 }

@@ -3,9 +3,11 @@
     <item
         android:id="@+id/bottom_nav_notes_fragment"
         android:icon="@drawable/notes_icon"
-        android:title="@string/notes" />
+        android:title="@string/notes"
+        android:iconTint="@color/text_color_hint"/>
     <item
         android:id="@+id/bottom_nav_tasks_fragment"
         android:icon="@drawable/tasks_icon"
-        android:title="@string/tasks" />
+        android:title="@string/tasks"
+        android:iconTint="@color/text_color_hint"/>
 </menu>

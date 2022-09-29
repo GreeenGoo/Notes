@@ -1,15 +1,11 @@
 package com.education.notes.presentation
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.education.notes.R
 import com.education.notes.databinding.ActivityMainBinding
@@ -18,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -26,16 +23,20 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        setupActionBarWithNavController(navController)
+        val appBarConfiguration = AppBarConfiguration
+            .Builder(
+                R.id.notesListFragment,
+                R.id.tasksFragment)
+            .build()
 
-        supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.findNavController()
-            ?.let {
-                setupActionBarWithNavController(
-                    it
-                )
-            }
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
         bottomNavigationView = binding.mainActivityBottomNavigationView
         initBottomNavView(bottomNavigationView, navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return super.onSupportNavigateUp() || findNavController(R.id.nav_host_fragment).navigateUp()
     }
 
     private fun initBottomNavView(
@@ -58,20 +59,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemReselectedListener { }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return super.onSupportNavigateUp() || navController.navigateUp()
-    }
-
     fun setBottomNavigationMenuVisibility(visibility: Int) {
         binding.mainActivityBottomNavigationView.visibility = visibility
-    }
-
-    companion object{
-        fun hideKeyboardFrom(context: Context, view: View?) {
-            val imm =
-                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view?.windowToken, 0)
-        }
     }
 }

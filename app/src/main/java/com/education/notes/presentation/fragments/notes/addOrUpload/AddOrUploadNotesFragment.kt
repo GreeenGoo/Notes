@@ -1,24 +1,16 @@
 package com.education.notes.presentation.fragments.notes.addOrUpload
 
 import android.app.Activity.RESULT_OK
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -31,8 +23,8 @@ import com.education.notes.presentation.viewmodel.NotesViewModel
 class AddOrUploadNotesFragment : Fragment() {
     private lateinit var notesViewModel: NotesViewModel
     private var _binding: FragmentAddOrUploadNotesBinding? = null
-    private val binding get() = _binding!!
     private var imageURI: String = ""
+    private val binding get() = _binding!!
     private val pickImage =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -53,6 +45,7 @@ class AddOrUploadNotesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
         uploadPicture()
         hideBottomNavigationMenu()
@@ -65,10 +58,8 @@ class AddOrUploadNotesFragment : Fragment() {
             binding.addOrUploadNotesFragmentAddOrRefreshButton.text =
                 getString(R.string.upload_button_text)
             loadSelectedNote(bundleNote)
-            menuHost(bundleNote)
             updateItem(bundleNote)
         }
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun loadSelectedNote(bundleNote: NotesModel) {
@@ -78,39 +69,6 @@ class AddOrUploadNotesFragment : Fragment() {
         Glide.with(requireContext()).load(bundleNote.imageURL)
             .override(PICTURE_WIDTH, PICTURE_HEIGHT)
             .into(binding.addNotesFragmentImageView)
-    }
-
-    private fun menuHost(bundleNote: NotesModel) {
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.delete_menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.menu_delete -> {
-                        deleteNote(bundleNote)
-                        true
-                    }
-                    else -> false
-                }
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
-
-    private fun deleteNote(bundleNote: NotesModel) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton(R.string.yes) { _, _ ->
-            notesViewModel.deleteNote(bundleNote)
-            showToast("${getString(R.string.note_is_removed)} ${bundleNote.title}!")
-            findNavController().navigate(R.id.notesListFragment)
-        }
-        builder.setNegativeButton(R.string.no) { _, _ ->
-        }
-        builder.setTitle("${getString(R.string.delete_note_question_title)} ${bundleNote.title}?")
-        builder.setMessage("${getString(R.string.delete_note_question_message)} ${bundleNote.title}?")
-        builder.create().show()
     }
 
     private fun updateItem(bundleNote: NotesModel) {
@@ -137,8 +95,7 @@ class AddOrUploadNotesFragment : Fragment() {
     }
 
     private fun hideBottomNavigationMenu() {
-        val mainActivity = requireActivity() as MainActivity
-        mainActivity.setBottomNavigationMenuVisibility(View.GONE)
+        (requireActivity() as MainActivity).setBottomNavigationMenuVisibility(View.GONE)
     }
 
     private fun addNewNote() {
