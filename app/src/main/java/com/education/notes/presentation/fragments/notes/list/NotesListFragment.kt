@@ -13,7 +13,6 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,10 +22,11 @@ import com.education.notes.model.NotesModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.utils.SwipeHelper
 import com.education.notes.presentation.viewmodel.NotesViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NotesListFragment : Fragment() {
 
-    private lateinit var notesViewModel: NotesViewModel
+    private val notesViewModel: NotesViewModel by viewModel()
     private var _binding: FragmentNotesListBinding? = null
     private val binding get() = _binding!!
     private var menuItemForVisibility: MenuItem? = null
@@ -69,7 +69,6 @@ class NotesListFragment : Fragment() {
     }
 
     private fun notesViewModelInit() {
-        notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
         notesViewModel.getAllNotes()
         notesViewModel.readAllData.observe(viewLifecycleOwner) { notes ->
             adapter.setData(notes)

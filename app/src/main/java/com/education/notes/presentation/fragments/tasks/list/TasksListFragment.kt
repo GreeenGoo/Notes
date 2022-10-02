@@ -19,7 +19,6 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,10 +28,11 @@ import com.education.notes.model.TasksModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.utils.SwipeHelper
 import com.education.notes.presentation.viewmodel.TasksViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TasksListFragment : Fragment() {
 
-    private lateinit var tasksViewModel: TasksViewModel
+    private val tasksViewModel: TasksViewModel by viewModel()
     private var _binding: FragmentTasksListBinding? = null
     private val binding get() = _binding!!
     private var menuItemForVisibility: MenuItem? = null
@@ -135,7 +135,6 @@ class TasksListFragment : Fragment() {
     }
 
     private fun tasksViewModelInit() {
-        tasksViewModel = ViewModelProvider(this)[TasksViewModel::class.java]
         tasksViewModel.getAllTasks()
         tasksViewModel.readAllData.observe(viewLifecycleOwner) { tasks ->
             adapter.setData(tasks)

@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.education.notes.R
@@ -19,9 +18,10 @@ import com.education.notes.databinding.FragmentAddOrUploadNotesBinding
 import com.education.notes.model.NotesModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.viewmodel.NotesViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddOrUploadNotesFragment : Fragment() {
-    private lateinit var notesViewModel: NotesViewModel
+    private val notesViewModel: NotesViewModel by viewModel()
     private var _binding: FragmentAddOrUploadNotesBinding? = null
     private var imageURI: String = ""
     private val binding get() = _binding!!
@@ -46,7 +46,6 @@ class AddOrUploadNotesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
         uploadPicture()
         hideBottomNavigationMenu()
         val bundleNote = arguments?.getParcelable<NotesModel>(NotesViewModel.BUNDLE_KEY)
