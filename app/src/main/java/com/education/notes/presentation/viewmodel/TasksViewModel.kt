@@ -1,44 +1,35 @@
 package com.education.notes.presentation.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.education.notes.data.TasksDatabase
-import com.education.notes.model.TasksModel
-
-import com.education.notes.repository.TasksRepository
+import com.education.notes.data.entity.TasksEntity
+import com.education.notes.data.repository.TasksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TasksViewModel(application: Application) : AndroidViewModel(application) {
-    val readAllData = MutableLiveData<List<TasksModel>>()
-    private val repository: TasksRepository
+class TasksViewModel(private val repository: TasksRepository) : ViewModel() {
+    val readAllData = MutableLiveData<List<TasksEntity>>()
 
-    init {
-        val taskDao = TasksDatabase.getDataBase(application.applicationContext).tasksDao()
-        repository = TasksRepository(taskDao)
-    }
-
-    fun getAllTasks(){
+    fun getAllTasks() {
         viewModelScope.launch(Dispatchers.IO) {
             readAllData.postValue(repository.getAllTasks())
         }
     }
 
-    fun addTask(task: TasksModel){
-        viewModelScope.launch(Dispatchers.IO){
+    fun addTask(task: TasksEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.addTask(task)
         }
     }
 
-    fun updateTask(task: TasksModel){
+    fun updateTask(task: TasksEntity){
         viewModelScope.launch(Dispatchers.IO){
             repository.updateTask(task)
         }
     }
 
-    fun deleteTask(task: TasksModel){
+    fun deleteTask(task: TasksEntity){
         viewModelScope.launch(Dispatchers.IO){
             repository.deleteTask(task)
         }
@@ -49,9 +40,5 @@ class TasksViewModel(application: Application) : AndroidViewModel(application) {
             repository.deleteAllTasks()
             readAllData.postValue(emptyList())
         }
-    }
-
-    companion object{
-        const val BUNDLE_KEY = "currentTask"
     }
 }

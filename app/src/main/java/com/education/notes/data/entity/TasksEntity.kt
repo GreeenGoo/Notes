@@ -1,18 +1,18 @@
-package com.education.notes.model
+package com.education.notes.data.entity
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
-private const val TABLE_NAME = "notes_table"
+private const val TABLE_NAME = "tasks_table"
 
 @Parcelize
 @Entity(tableName = TABLE_NAME)
-data class NotesModel(
+data class TasksEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
-    val title: String,
-    val description: String,
-    val imageURL: String
-):Parcelable
+    val id: Int,
+    val text: String,
+    val crossed: Boolean
+) : Parcelable
+

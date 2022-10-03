@@ -46,11 +46,11 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.bottom_nav_notes_fragment -> {
-                    navController.navigate(R.id.notesListFragment)
+                    navController.navigate(R.id.action_tasksFragment_to_notesListFragment)
                     return@setOnItemSelectedListener true
                 }
                 R.id.bottom_nav_tasks_fragment -> {
-                    navController.navigate(R.id.tasksFragment)
+                    navController.navigate(R.id.action_notesListFragment_to_tasksFragment)
                     return@setOnItemSelectedListener true
                 }
             }

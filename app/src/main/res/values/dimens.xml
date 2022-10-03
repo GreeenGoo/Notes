@@ -2,12 +2,8 @@
 <resources>
 
     //padding
-    <dimen name="small_padding">2dp</dimen>
     <dimen name="xsmall_padding">4dp</dimen>
-    <dimen name="medium_padding">5dp</dimen>
-    <dimen name="xmedium_padding">8dp</dimen>
     <dimen name="large_padding">16dp</dimen>
-    <dimen name="xlarge_padding">32dp</dimen>
 
     //margin
     <dimen name="small_margin">4dp</dimen>
@@ -20,16 +16,12 @@
     //textSize
     <dimen name="small_text_size">10sp</dimen>
     <dimen name="medium_text_size">15sp</dimen>
-    <dimen name="large_text_size">25sp</dimen>
 
     //card_view_layout
     <dimen name="card_view_image_view_width">100dp</dimen>
     <dimen name="card_view_image_view_height">100dp</dimen>
     <dimen name="card_view_card_corner_radius">10dp</dimen>
     <dimen name="card_view_cord_elevation">3dp</dimen>
-    <dimen name="card_view_title_width">236dp</dimen>
-    <dimen name="card_view_description_width">236dp</dimen>
-    <dimen name="task_column_margin">15dp</dimen>
 
     //fragment_add_or_upload_notes
     <dimen name="add_or_upload_description_height">100dp</dimen>
