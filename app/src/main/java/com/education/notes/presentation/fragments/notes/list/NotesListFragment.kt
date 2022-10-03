@@ -17,8 +17,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
+import com.education.notes.data.entity.NotesEntity
 import com.education.notes.databinding.FragmentNotesListBinding
-import com.education.notes.model.NotesModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.utils.SwipeHelper
 import com.education.notes.presentation.viewmodel.NotesViewModel
@@ -30,7 +30,7 @@ class NotesListFragment : Fragment() {
     private var _binding: FragmentNotesListBinding? = null
     private val binding get() = _binding!!
     private var menuItemForVisibility: MenuItem? = null
-    private var notesList: List<NotesModel> = emptyList()
+    private var notesList: List<NotesEntity> = emptyList()
     private var adapter = NotesListAdapter(::onItemClick)
 
     override fun onCreateView(

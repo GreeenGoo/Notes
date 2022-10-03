@@ -23,8 +23,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.education.notes.R
+import com.education.notes.data.entity.TasksEntity
 import com.education.notes.databinding.FragmentTasksListBinding
-import com.education.notes.model.TasksModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.utils.SwipeHelper
 import com.education.notes.presentation.viewmodel.TasksViewModel
@@ -36,7 +36,7 @@ class TasksListFragment : Fragment() {
     private var _binding: FragmentTasksListBinding? = null
     private val binding get() = _binding!!
     private var menuItemForVisibility: MenuItem? = null
-    private var tasksList: List<TasksModel> = emptyList()
+    private var tasksList: List<TasksEntity> = emptyList()
     private var adapter = TasksListAdapter(::onItemClick)
 
     override fun onCreateView(
@@ -74,7 +74,7 @@ class TasksListFragment : Fragment() {
 
     private fun addTaskToDatabase() {
         val taskText = binding.addOrUploadTasksAddPanelFieldForText.text.toString()
-        val task = TasksModel(0, taskText, false)
+        val task = TasksEntity(0, taskText, false)
         tasksViewModel.addTask(task)
         showToast(getString(R.string.task_is_added))
         hideAddPanel()
@@ -146,11 +146,11 @@ class TasksListFragment : Fragment() {
     private fun onItemClick(position: Int) {
         if (tasksList[position].crossed) {
             tasksViewModel.updateTask(
-                TasksModel(tasksList[position].id, tasksList[position].text, false)
+                TasksEntity(tasksList[position].id, tasksList[position].text, false)
             )
         } else {
             tasksViewModel.updateTask(
-                TasksModel(tasksList[position].id, tasksList[position].text, true)
+                TasksEntity(tasksList[position].id, tasksList[position].text, true)
             )
         }
             tasksViewModel.getAllTasks()

@@ -1,22 +1,22 @@
 package com.education.notes.di
 
-import com.education.notes.data.NotesDatabase
-import com.education.notes.data.TasksDatabase
+import com.education.notes.data.db.NotesDatabase
 import com.education.notes.presentation.viewmodel.NotesViewModel
 import com.education.notes.presentation.viewmodel.TasksViewModel
-import com.education.notes.repository.NotesRepository
-import com.education.notes.repository.TasksRepository
+import com.education.notes.data.repository.NotesRepository
+import com.education.notes.data.repository.TasksRepository
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val notesModule = module {
-
+val dbModule = module {
     single {
-        NotesDatabase.getDatabase(context = get()).notesDao()
+        NotesDatabase.newInstance(context = get())
     }
+}
 
+val notesModule = module {
     single {
-        NotesRepository(notesDao = get())
+        NotesRepository(notesDatabase = get())
     }
 
     viewModel {
@@ -26,11 +26,7 @@ val notesModule = module {
 
 val tasksModule = module {
     single {
-        TasksDatabase.getDataBase(context = get()).tasksDao()
-    }
-
-    single {
-        TasksRepository(tasksDao = get())
+        TasksRepository(notesDatabase = get())
     }
 
     viewModel {

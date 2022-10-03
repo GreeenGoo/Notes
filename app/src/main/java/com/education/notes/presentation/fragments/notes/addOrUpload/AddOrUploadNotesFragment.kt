@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.education.notes.R
+import com.education.notes.data.entity.NotesEntity
 import com.education.notes.databinding.FragmentAddOrUploadNotesBinding
-import com.education.notes.model.NotesModel
 import com.education.notes.presentation.MainActivity
 import com.education.notes.presentation.viewmodel.NotesViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -48,7 +48,7 @@ class AddOrUploadNotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         uploadPicture()
         hideBottomNavigationMenu()
-        val bundleNote = arguments?.getParcelable<NotesModel>(NotesViewModel.BUNDLE_KEY)
+        val bundleNote = arguments?.getParcelable<NotesEntity>(NotesViewModel.BUNDLE_KEY)
         if (bundleNote == null) {
             addNewNote()
         } else {
@@ -61,7 +61,7 @@ class AddOrUploadNotesFragment : Fragment() {
         }
     }
 
-    private fun loadSelectedNote(bundleNote: NotesModel) {
+    private fun loadSelectedNote(bundleNote: NotesEntity) {
         binding.addNotesFragmentTitle.setText(bundleNote.title)
         binding.addNotesFragmentDescription.setText(bundleNote.description)
         imageURI = bundleNote.imageURL
@@ -70,12 +70,12 @@ class AddOrUploadNotesFragment : Fragment() {
             .into(binding.addNotesFragmentImageView)
     }
 
-    private fun updateItem(bundleNote: NotesModel) {
+    private fun updateItem(bundleNote: NotesEntity) {
         binding.addOrUploadNotesFragmentAddOrRefreshButton.setOnClickListener {
             val title = binding.addNotesFragmentTitle.text.toString()
             val description = binding.addNotesFragmentDescription.text.toString()
             if (title.isNotEmpty() && description.isNotEmpty()) {
-                val updateNote = NotesModel(bundleNote.id, title, description, imageURI)
+                val updateNote = NotesEntity(bundleNote.id, title, description, imageURI)
                 notesViewModel.updateNote(updateNote)
                 showToast(getString(R.string.note_is_updated))
                 findNavController().navigateUp()
@@ -105,7 +105,7 @@ class AddOrUploadNotesFragment : Fragment() {
                 if (imageURI.isEmpty()) {
                     imageURI = getStandardURI()
                 }
-                val note = NotesModel(0, title, description, imageURI)
+                val note = NotesEntity(0, title, description, imageURI)
                 notesViewModel.addNote(note)
                 showToast(getString(R.string.note_is_added))
                 findNavController().navigateUp()

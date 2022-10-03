@@ -5,14 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.education.notes.R
-import com.education.notes.model.TasksModel
+import com.education.notes.data.entity.TasksEntity
 import kotlinx.android.synthetic.main.task_column.view.item_text
 
 typealias OnItemClickListener = (position: Int) -> Unit
 
 class TasksListAdapter(private val onItemClickListener:  OnItemClickListener) :
     RecyclerView.Adapter<TasksListAdapter.ViewHolder>() {
-    private var tasksList = emptyList<TasksModel>()
+    private var tasksList = emptyList<TasksEntity>()
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -42,7 +42,7 @@ class TasksListAdapter(private val onItemClickListener:  OnItemClickListener) :
         }
     }
 
-    fun setData (tasks: List<TasksModel>){
+    fun setData (tasks: List<TasksEntity>){
         this.tasksList = tasks
         notifyDataSetChanged()
     }

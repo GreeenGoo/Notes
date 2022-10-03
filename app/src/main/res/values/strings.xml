@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name">Notes</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="everything_is_removed">Successfully removed everything!</string>
     <string name="delete_all_question_title">Delete everything?</string>
     <string name="delete_all_question_message">Are you sure you want to delete all the table?</string>
-    <string name="emptyDatabaseText">The database is empty!</string>
 
     //AddOrUploadNotesFragment
     <string name="note_is_added">Successfully added!</string>
@@ -17,7 +15,6 @@
     <string name="delete_note_question_message">Are you sure you want to delete</string>
     <string name="note_is_updated">Successfully updated!</string>
     <string name="fill_out_note_fields">Please, fill out all the fields.</string>
-    <string name="refresh_button">Refresh</string>
 
 
     //fragment_add_or_upload_notes
@@ -36,10 +33,6 @@
     <string name="delete_menu_delete">Delete</string>
 
     //nav_graph
-    <string name="nav_graph_list_fragment_label">Notes</string>
-    <string name="nav_graph_add_fragment_label">Add</string>
-    <string name="nav_graph_task_fragment_label">Tasks</string>
-    <string name="AddOrUploadedLabel">fragment_tasks</string>
 
     //Tasks
     //fragment_tasks_list

@@ -1,6 +1,7 @@
 package com.education.notes.application
 
 import android.app.Application
+import com.education.notes.di.dbModule
 import com.education.notes.di.notesModule
 import com.education.notes.di.tasksModule
 import org.koin.android.ext.koin.androidContext
@@ -15,7 +16,7 @@ class Application : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@Application)
-            modules(notesModule, tasksModule)
+            modules(dbModule, notesModule, tasksModule)
         }
     }
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.education.notes.R
-import com.education.notes.model.NotesModel
+import com.education.notes.data.entity.NotesEntity
 import kotlinx.android.synthetic.main.card_view_layout.view.card_view
 import kotlinx.android.synthetic.main.card_view_layout.view.item_description
 import kotlinx.android.synthetic.main.card_view_layout.view.item_image
@@ -18,7 +18,7 @@ typealias OnItemClickListener = (position: Int) -> Unit
 class NotesListAdapter(private val onItemClickListener: OnItemClickListener) :
     RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
 
-    private var notesList = emptyList<NotesModel>()
+    private var notesList = emptyList<NotesEntity>()
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -43,7 +43,7 @@ class NotesListAdapter(private val onItemClickListener: OnItemClickListener) :
         }
     }
 
-    fun setData(notes: List<NotesModel>) {
+    fun setData(notes: List<NotesEntity>) {
         this.notesList = notes
         notifyDataSetChanged()
     }
