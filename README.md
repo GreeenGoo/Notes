@@ -49,4 +49,15 @@ Press an icon of the bucket at the top right corner to clean the main list of ta
   <img src="https://github.com/GreeenGoo/For_documentations/blob/main/Notes/13%20Tasks%20remove%20all%20the%20table.jpg?raw=true" width="270" height="600">
 </p>
 
+Libraries and methods used in the app:
++ ViewBinding
++ Navigation UI
++ Recycler View
++ Room database library
++ Glide
++ Koin
++ MVVM architecture
++ SwipeHelper
+
+
 Enjoy using the app!
