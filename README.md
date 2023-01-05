@@ -40,7 +40,7 @@ To create a new task, you must press the round button at the bottom right corner
 To delete any of the tasks we just need to swipe the task to the left and an icon for deleting will be shown (Step 1). Press the button and the task will be deleted from the main list (Step 2).
 
 <p align="center">
-  <img src="https://github.com/GreeenGoo/For_documentations/blob/main/Notes/11-12%20Tasks%20deliting.png?raw=true" width="575" height="650">
+  <img src="https://github.com/GreeenGoo/For_documentations/blob/main/Notes/11-12%20Tasks%20deliting.png?raw=true">
 </p>
 
 Press an icon of the bucket at the top right corner to clean the main list of tasks and a warning message will be shown asking us if we want to delete the list. Press "Yes" if we are sure we want to delete all the tasks or press "No" to cancel the deliting.
